@@ -1,2 +1,3 @@
 # simu-documentation
-SIMU Documentation like User Guide, Instalation instructions, Features, etc.
+
+SIMU Documentation like User Guide, Instalation instructions, Features, etc..
