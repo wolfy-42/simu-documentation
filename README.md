@@ -23,7 +23,7 @@ Hardware Description Language (HDL) simulation is a specific task requiring many
 Why is SIMU so good:
 
 - short setup time and learning curve, because we don't like wasting time
-- sticking to simple language constructs for fast ramp-up
+- sticking to simple language constructs for fast ramp-up 
 - promote all good practices in the field of verification - regression, randomization, scalability, coverage, etc.
 - flexible scripting structure to switch quickly between different OS, HDL languages and simulation tool vendors
 
