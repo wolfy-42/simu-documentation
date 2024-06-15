@@ -1,6 +1,4 @@
-
-
-[TOC]
-
 # Quick Reference
+
+
 
