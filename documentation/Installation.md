@@ -1,5 +1,3 @@
-[TOC]
-
 # Installation
 
 Copy 'symphony/dev/sim' folder to your project simulation folder.

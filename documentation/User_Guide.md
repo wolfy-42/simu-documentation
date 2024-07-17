@@ -1,14 +1,12 @@
-
-
-[TOC]
-
-# User Guide 
+# User Guide
 
 In the examples below we will use Mentor's Questa&reg; simulator calls. Other simulators will have very similar, almost identical calls and behaviour.
 
 ## SIMU Configuration
 
 The cloned repo doesn't need any configuration to run the existing test-cases, except the avalability of the simulation tools and licenses.
+
+If a vendor specific IPs or primitives are used, the HDL vendor libraries have to be compiled as well.
 
 If new test-cases are created then some configurations have to chanchanged, see details further below.
 

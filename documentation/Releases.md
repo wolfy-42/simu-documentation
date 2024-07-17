@@ -1,10 +1,6 @@
-# Releases 
+# Releases
 
-
-
-[TOC]
-
-## Release 5.0.a - alpha - 2024-TBD
+## Release 5.0.a - alpha - 2024-06-12
 
 Alpha release:
 

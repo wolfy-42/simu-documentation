@@ -1,4 +1,52 @@
-# Features
+# SIMU Documentation
+
+SIMU is an HDL simulation framework for FPGA development. 
+
+Hardware Description Language (HDL) simulation is a specific task requiring many tools to work together and usually everyone developing an FPGA is developing a custom simulation environment. This is not very efficient and over time it becomes quite tedious. For this reason the simu framework was developed, with the added flexibility to support different simulation tool vendors and different FPGA vendors. In a custom environment it is not often the case to have the ability to support different simulators and FPGA vendors. 
+
+Why is SIMU so good:
+
+- short setup time and learning curve, because we don't like wasting time
+- sticking to simple language constructs for fast ramp-up 
+- promote all good practices in the field of verification - regression, randomization, scalability, coverage, etc.
+- flexible scripting structure to switch quickly between different OS, HDL languages and simulation tool vendors
+
+ [Table of contents](Table_of_contents.md)
+
+[simu-documenation](./doc-exports/simu-documentation.md) exported as a single .md file
+
+[simu-documenation](./doc-exports/simu-documentation.pdf) exported as a .pdf
+
+[TOC]
+
+# Releases
+
+## Release 5.0.a - alpha - 2024-06-12
+
+Alpha release:
+
+* many features are not well tested
+* somewhat significant architecture change
+* added universal compile/optimize/simulation/coverage calls to enable simulator seamless switching and easy addition of new simulators
+* added non vendor TCL shell simulation calls
+* added easy integration of FPGA vendor exported simulation scripts 
+* simplified compile scripts 
+* unified simulation calls
+* added manual regression
+
+
+
+## Release 4.6 - stable - 2018-31-10
+
+Stable release:
+
+* almost all features are tested and functional# Installation
+
+Copy 'symphony/dev/sim' folder to your project simulation folder.
+
+That's it.
+
+The 'sim' folder contains all scripts and libraries you will need to run HDL simulations.# Features
 
 The previously supported features will be maintained in the new SIMU reversion, unless explicitly mentioned that the support is obsolete.
 
@@ -96,3 +144,124 @@ The previously supported features will be maintained in the new SIMU reversion, 
 [^f1]: 'Feature ID' - unique ID used to keep track of the features developemnt, for internal developes use ony
 [^f2]: 'capable' - it is potentially possible to use it, although a new simulator configuration and TB/TC example has to be created based on exiting templates
 [^f3]: 'complete example' - one or several examples that include - simulator configuration, Test-Bench(TB), Test-Case(TC), Regression, Sim Vendor TCL shell, Linux tclsh shell, optimization, coverage
+# Quick Reference
+
+
+
+# User Guide
+
+In the examples below we will use Mentor's Questa&reg; simulator calls. Other simulators will have very similar, almost identical calls and behaviour.
+
+## SIMU Configuration
+
+The cloned repo doesn't need any configuration to run the existing test-cases, except the avalability of the simulation tools and licenses.
+
+If new test-cases are created then some configurations have to chanchanged, see details further below.
+
+## Run Single Test-Case simulation
+
+There are several ways to run simulation of a single test-case. They acheive the same result, running a test-case simulation, but have some subtle differences.
+
+### Test-case simulation - in simulator vendor TCL interpreter
+
+```
+$ cd symphony/dev/sim/run
+$ vsim -c -do ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl -do exit
+```
+
+The simulator vendor TCL shell can be accessed in GUI or in CLI. The example above useds the call to Quetta/Modelsim in CLI mode invoked from Linux bash sell.
+
+### Test-case simulation - in Linux TCL interpreter and SIMU shell with SIMU test-case simulation call 
+
+```
+$ cd symphony/dev/sim/run
+$ tclsh runme_simu_shell.tcl
+$ run_testcase ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl
+```
+
+### Test-case simulation - in Linux TCL interpreter and SIMU shell
+
+```
+$ cd symphony/dev/sim/run
+$ tclsh runme_simu_shell.tcl
+> source ../testcases/tc_reset/tc_reset.tcl 
+```
+
+## Run Regression Simulation
+
+There are several ways to run a regression simulation of a all test-cases. They acheive the practically the same result, running regression simulation, but have some subtle differences.
+
+### Regression using atomatic test-case list - in simulator vendor TCL interpreter
+
+```
+$ cd symphony/dev/sim/run
+$ vsim -c -do ../scripts_configure/run_regression.tcl -do exit
+```
+
+The simulator vendor TCL shell can be accessed in GUI or in CLI. The example above useds the call to Quetta/Modelsim in CLI mode invoked from Linux bash sell.
+
+### Regression using atomatic test-case list -  in Linux TCL interpreter and SIMU shell with SIMU regression call 
+
+```
+$ cd symphony/dev/sim/run
+$ tclsh runme_simu_shell.tcl
+> source ../scripts_configure/run_regression.tcl
+```
+
+### Regression using manual test-case list - in Linux TCL interpreter and SIMU shell
+
+```
+$ cd symphony/dev/sim/run
+$ tclsh runme_simu_shell.tcl
+> source ../home/work/des.v/trunk/simu_fixes/simu/dev/sim/regression_lists_templates/REGRESSION_TC_LIST_MANUAL.tcl
+```
+
+# Architecture
+
+## Scripts folder structure
+
+The TCL scripts are located in the scrpts_config folder as described below:
+
+![scritps_folder_structure](../images/scritps_folder_structure.png)
+
+### scripts_config/tccommon_lib
+
+None of the scripts in this folder should be called directly. 
+
+This folder contains all scripts executed during the run of a test-case (TC). All these scripts are called only from the test-case script.
+
+### scripts_config/scripts_lib
+
+None of the scripts in this folder should be called directly, except the library compilation script in special cases.
+
+There are three main scripts in this folder, which are at the heart of the simu scripts - the simu.tcl library script, the regression.tcl script and the utils.tcl library. The simu.tcl script is calling the other two scripts, and the TC[^1] execution TCL script is calling the simu.tcl script.
+
+The tclreadline2.tcl script provides the user friendly experience keeping the history of the executed commands. It is very helpful when using the Linux tclsh TCL interpreter that lacks basic user friendliness. It is automatically called by the simu.tcl script.
+
+The compile_xilinx_libs.tcl script is used to compile Xilinx libraries, but the same functionality can be done manually from the Vivado tool GUI. It can be used for scripting automation purposes if we don't want to use the tool GUI.
+
+#### scripts_config/scripts_lib/auto_gen
+
+In this folder is located cmd_line_options.tcl which is automatically generated and should not be changed manually because it will be overwritten. The script is generated from the config_cmd_line_option_defailt.tcl and in some cases takes into account with higher precedence the CLI passed arguments when the simu library is used to run test-case or regression simulations.
+
+
+
+
+
+# Developer's Guide
+
+
+
+# Appendix
+
+## Abbreviations
+
+[^1]: TC - Test-Case
+[^2]: TB - Test-Bench
+
+
+
+## External References
+
+
+

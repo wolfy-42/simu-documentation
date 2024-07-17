@@ -1,7 +1,3 @@
-
-
-[TOC]
-
 # Developer's Guide
 
 
