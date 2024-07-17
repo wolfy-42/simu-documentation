@@ -14,7 +14,7 @@ The TCL scripts are located in the scrpts_config folder folllowing the conventio
 
 ### tccommon_lib folder
 
-This folder contains all scripts ececuted during the run of a test-case. All these scripts are called directly on only from the test-cases script.
+This folder contains all scripts executed during the run of a test-case. All these scripts are called directly on only from the test-cases script.
 
 ### scripts_lib
 
