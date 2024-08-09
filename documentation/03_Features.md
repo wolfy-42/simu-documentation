@@ -6,7 +6,7 @@ The previously supported features will be maintained in the new SIMU reversion, 
 
 | TC Sim Feature                                               | SIMU rev.                               | Feature ID[^f1] |
 | ------------------------------------------------------------ | --------------------------------------- | --------------- |
-| Universal test-case(TC) .tcl file (no need to edit each one for tc folder and name) | 5.1(planned)                            | f100            |
+| Universal test-case(TC) .tcl file (no need to edit each one for tc folder and name) | 5.2(planned)                            | f100            |
 | Randomization, seed force                                    | 4.6                                     | f101            |
 | HDL Verilog, SystemVerilog and VHDL Compilation              | 4.6                                     | f102            |
 | Elaboration phase                                            | 4.6(xsim)                               | f103            |
@@ -38,31 +38,32 @@ The previously supported features will be maintained in the new SIMU reversion, 
 | Submit jobs on remote machines                               | (planned)                 | f209            |
 | Regression run call with a number indicating the number of threads to execute | (planned)                 | f210            |
 | Regression progress for auto generated/manual/local/remote/threads regression | 4.6(auto list), (planned) | f211            |
-| run folder with date/time hash                               | 5.1(planned)              | f212            |
+| run folder with date/time hash                               | 5.2(planned)              | f212            |
 
 ## HDL Simulators Supported
 
 | HDL Simulation Tool    | Vendor    | Tool Version Tested(note) | SIMU Template                                                | SIMU rev.    | Feature ID[^f1] |
 | ---------------------- | --------- | ------------------------- | ------------------------------------------------------------ | ------------ | --------------- |
-| Questa®                | Mentor®   |                           | complete example[^f3]                                        | 4.6          | f300            |
+| QuestaSm®              | Mentor®   |                           | complete example[^f3]                                        | 4.6          | f300            |
 | ModelSim®              | Mentor®   |                           | complete example[^f3] (identical to Questa)                  | 4.6          | f301            |
 | Xsim®                  | Xilinx®   |                           | complete example[^f3]                                        | 4.6          | f302            |
-| ActiveHDL® GUI and CLI | Aldec®    |                           | complete example[^f3]                                        | 4.6          | f303            |
-| Rviera®                | Aldec®    |                           | no examples                                                  | capable[^f2] | f304            |
-| Xcelium®               | Cadence®  |                           | partial configuration(missing coverage), complete TC, partial regression(missing coverage aggreagation) | 5.0          | f305            |
-| VCS®                   | Synopsys® |                           | no examples                                                  | capable[^f2] | f306            |
+| VitisHLS®              | Xilinx®   |                           | complete example[^f3]                                        | 5.1(planned) | f303            |
+| ActiveHDL® GUI and CLI | Aldec®    |                           | complete example[^f3]                                        | 4.6          | f304            |
+| Rviera®                | Aldec®    |                           | no examples                                                  | capable[^f2] | f305            |
+| Xcelium®               | Cadence®  |                           | partial configuration(missing coverage), complete TC, partial regression(missing coverage aggreagation) | 5.0          | f306            |
+| VCS®                   | Synopsys® |                           | no examples                                                  | capable[^f2] | f307            |
 
 ## FPGA Vendors Supported
 
-| FPGA Compile Tool | Vendor     | Tool Version Tested(note) | SIMU Template             | SIMU rev.    | Feature ID[^f1] |
-| ----------------- | ---------- | ------------------------- | ------------------------- | ------------ | --------------- |
-| Vivado®           | Xilinx®    |                           | IPI example               | 4.6          | f400            |
-| ISE®              | Xilinx®    |                           | no examples               | 4.6          | f401            |
-| Quartus®          | Altera®    |                           | Platform Designer example | 4.6          | f402            |
-| Diamond®          | Lattice®   |                           | no examples               | (capable)    | f403            |
-| Radiant®          | Lattice®   |                           | no examples               | (capable)    | f404            |
-|                   | Microchip® |                           | no examples               | (capable)    | f405            |
-| Vitis HLS®        | Xilinx®    |                           |                           | 5.1(planned) | f406            |
+| FPGA Compile Tool | Vendor     | Tool Version Tested(note) | SIMU Template                           | SIMU rev.        | Feature ID[^f1] |
+| ----------------- | ---------- | ------------------------- | --------------------------------------- | ---------------- | --------------- |
+| Vivado®           | Xilinx®    |                           | IPI complete example[^f3]               | 4.6              | f400            |
+| ISE®              | Xilinx®    |                           | no examples                             | 4.6              | f401            |
+| Vitis HLS®        | Xilinx®    |                           | complete example[^f3]                   | 5.1(planned)     | f402            |
+| Quartus®          | Altera®    |                           | Platform Designer complete example[^f3] | 4.6              | f403            |
+| Diamond®          | Lattice®   |                           | no examples                             | 4.6 capable[^f2] | f404            |
+| Radiant®          | Lattice®   |                           | no examples                             | 4.6 capable[^f2] | f405            |
+|                   | Microchip® |                           | no examples                             | 4.6 capable[^f2] | f406            |
 
 ## OS and TCL Interpreters
 

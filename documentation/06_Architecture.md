@@ -4,7 +4,7 @@
 
 The TCL scripts are located in the scrpts_config folder as described below:
 
-![scritps_folder_structure](../images/scritps_folder_structure.png)
+![scritps_folder_structure](./images/scritps_folder_structure.png)
 
 ### scripts_config/tccommon_lib
 

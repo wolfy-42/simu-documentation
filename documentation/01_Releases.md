@@ -1,5 +1,14 @@
 # Releases
 
+
+
+## Release 5.1.b - beta - 2024-08-08
+
+Beta release:
+
+* many features are tested
+* added VitisHLS support for multiple test-cases and test-benches and regression 
+
 ## Release 5.0.a - alpha - 2024-06-12
 
 Alpha release:
