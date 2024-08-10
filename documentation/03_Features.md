@@ -42,16 +42,16 @@ The previously supported features will be maintained in the new SIMU reversion, 
 
 ## HDL Simulators Supported
 
-| HDL Simulation Tool    | Vendor    | Tool Version Tested(note) | SIMU Template                                                | SIMU rev.    | Feature ID[^f1] |
-| ---------------------- | --------- | ------------------------- | ------------------------------------------------------------ | ------------ | --------------- |
-| QuestaSm®              | Mentor®   |                           | complete example[^f3]                                        | 4.6          | f300            |
-| ModelSim®              | Mentor®   |                           | complete example[^f3] (identical to Questa)                  | 4.6          | f301            |
-| Xsim®                  | Xilinx®   |                           | complete example[^f3]                                        | 4.6          | f302            |
-| VitisHLS®              | Xilinx®   |                           | complete example[^f3]                                        | 5.1(planned) | f303            |
-| ActiveHDL® GUI and CLI | Aldec®    |                           | complete example[^f3]                                        | 4.6          | f304            |
-| Rviera®                | Aldec®    |                           | no examples                                                  | capable[^f2] | f305            |
-| Xcelium®               | Cadence®  |                           | partial configuration(missing coverage), complete TC, partial regression(missing coverage aggreagation) | 5.0          | f306            |
-| VCS®                   | Synopsys® |                           | no examples                                                  | capable[^f2] | f307            |
+| HDL Simulation Tool | Vendor    | Tool Version Tested(note) | SIMU Template                                                | SIMU rev.    | Feature ID[^f1] |
+| ------------------- | --------- | ------------------------- | ------------------------------------------------------------ | ------------ | --------------- |
+| QuestaSm®           | Mentor®   |                           | complete example[^f3], GUI and CLI                           | 4.6          | f300            |
+| ModelSim®           | Mentor®   |                           | complete example[^f3] (identical to Questa), GUI and CLI     | 4.6          | f301            |
+| Xsim®               | Xilinx®   |                           | complete example[^f3], GUI and CLI                           | 4.6          | f302            |
+| VitisHLS®           | Xilinx®   |                           | complete example[^f3], CLI                                   | 5.1(planned) | f303            |
+| ActiveHDL®          | Aldec®    |                           | complete example[^f3], GUI and CLI                           | 4.6          | f304            |
+| Rviera®             | Aldec®    |                           | no examples                                                  | capable[^f2] | f305            |
+| Xcelium®            | Cadence®  |                           | partial configuration(missing coverage), complete TC, partial regression(missing coverage aggreagation), GUI and CLI | 5.0          | f306            |
+| VCS®                | Synopsys® |                           | no examples                                                  | capable[^f2] | f307            |
 
 ## FPGA Vendors Supported
 
