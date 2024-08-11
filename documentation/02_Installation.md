@@ -8,3 +8,4 @@ Besides the SIMU framework, you will need the HDL simulator tool and the license
 
 A list of the needed relevant HDL simulating tools can be found here - [HDL Simulators Supported][HDL Simulators Supported]
 
+Also you will need to configure the SIMU environment, check here - [5.1 SIMU HDL Configuration][5.1 SIMU HDL Configuration]

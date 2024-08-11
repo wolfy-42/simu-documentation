@@ -1,4 +1,4 @@
-# Features
+# 3. Features
 
 The previously supported features will be maintained in the new SIMU reversion, unless explicitly mentioned that the support is obsolete.
 

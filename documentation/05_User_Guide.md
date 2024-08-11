@@ -10,45 +10,75 @@ If a vendor specific IPs or primitives are used, the HDL vendor libraries have t
 
 If new test-cases are created then some configurations have to chanchanged, see details further below.
 
-### 5.1.1 HDL Flow Paths Configuration
+### HDL Flow Paths Configuration
 
-### 5.1.2 HDL Flow Options Configuration
+There are several paths that have to be configured before the environment can be used:
 
+1. Paths in the general script
+2. Paths in the test-case script
 
+### HDL Flow Options Configuration
 
-### 5.1.3 HDL Test-cases, test-benches, RTL Configuration
+Configure the command line options script
 
-### 5.1.4 HDL Regression Configuration
+#### TC execution flow option
 
+1. 
 
+#### Regression execution flow options
+
+1. 
+
+### HDL Test-cases, test-benches, RTL Configuration
+
+The test-case (TC) name in the test-case TCL script
+
+The RTL files in the compile_all script
+
+The TB files the TC files in the compile_all script
+
+### HDL Regression Configuration
+
+The test-case/test-bench folder in the regression config script
 
 ## 5.2 SIMU HLS Configuration
 
+There are several paths that have to be configured before the environment can be used:
 
+1. Paths in the general script
+2. Paths in the test-case script
 
-### 5.2.1 HLS Flow Paths Configuration
+### HLS Flow Paths Configuration
 
-### 5.2.2 HLS Flow Options Configuration
-
-
-
-### 5.2.3 HLS Test-cases, test-benches, HLS Configuration
-
-### 5.2.4 HLS Regression Configuration
+### HLS Flow Options Configuration
 
 
 
-## 5.2 Run Single Test-Case simulation
+### HLS Test-cases, test-benches, HLS Configuration
+
+### HLS Regression Configuration
+
+
+
+## 5.3 Run Single Test-Case simulation
+
+It has to be noted that 
+
+1. All test-cases have to be executed executed from the **run** folder > _cd symphony/dev/sim/run_
+2. All test-case names have to start with the **tc_** prefix. This is required by the regression automation and results parsing.
+3. Every HDL test-case is paired with an identical in name TCL script. 
+4. That test-case TCL script is the one actually executed by the SIMU framework. 
+5. The test-case TCL script contains some required by SIMU information, such as several pre-configured paths and the test-case name.
 
 There are several ways to run simulation of a single test-case. They acheive the same result, running a test-case simulation, but are invoked in different ways using:
 
- * Linux TCL interpreter using tclsh terminal
- * simulator vendor TCL CLI in bash terminal 
- * simulator vendor TCL terminal in GUI - can be used to run simulations on Windows OS
+ * Linux TCL interpreter using tclsh terminal 
+ * Simulator vendor TCL CLI in bash terminal 
+ * Simulator vendor TCL terminal in GUI 
  * _The three use-cases above can be used with or without the SIMU shell_ 
- * _The three use-cases above can be used with the run_testcase function form the SIMU shell or by simply sourcing the test-case script_
+ * _The three use-cases above can be used with the run_testcase function form the SIMU shell or by simply "sourcing" the test-case script_
 
-### 5.2.1 Test-case simulation - in Linux TCL interpreter
+### 5.3.1 Test-case simulation - using Linux TCL interpreter
 
 **(with/without SIMU shell, with/without SIMU _run_testcase_ simulation call, simulator vendor tool independent)**
 
@@ -72,11 +102,11 @@ $ tclsh
 
 Alternatively, as seen above, it is also possible not to use the SIMU shell. In this case the user interface lacks history and it is not convenient for use and for that reason it is shown here for completeness, but it is not recommended to be used.
 
-### 5.2.2 Test-case simulation - in simulator vendor TCL interpreter
+### 5.3.2 Test-case simulation - using simulator vendor TCL interpreter
 
 **(from Linux bash or simulator GUI)**
 
-#### 5.2.2.1 ModelSim/QuestaSim vendor TCL interpreter
+#### ModelSim/QuestaSim vendor TCL interpreter
 
 **(with/without SIMU shell, with/without SIMU _run_testcase_ simulation call, from Linux bash or from simulator vendor GUI, can run on Windows OS)**
 
@@ -102,17 +132,17 @@ The example above is using the SIMU shell _run_testcase_ function in the QuestaS
 
 The example above is using the QuestaSim/Modelsim TCL interpreter in simulator vendor GUI TCL terminal.
 
-#### 5.2.3.2 Xilinx XSim vendor TCL interpreter
+#### Xilinx XSim vendor TCL interpreter
 
-#### 5.2.3.3 Xcelium vendor TCL interpreter
+#### Xcelium vendor TCL interpreter
 
-#### 5.2.3.4 ActiveHDL vendor TCL interpreter
+#### ActiveHDL vendor TCL interpreter
 
-#### 5.2.3.2 VitisHLS vendor TCL interpreter
+#### VitisHLS vendor TCL interpreter
 
-#### 5.2.3.2 Other vendor TCL interpreter
+#### Other vendor TCL interpreter
 
-## 5.3 Run Regression Simulation
+## 5.4 Run Regression Simulation
 
 There are several ways to run a regression simulation of all test-cases. They achieve the practically the same result, running regression simulation, but have some subtle differences.
 
@@ -124,7 +154,7 @@ It has to be noted that a regression call can be executed in all different ways 
  * _The three use-cases above can be used with or without the SIMU shell_ 
  * _The three use-cases above can be used with the run_testcase function form the SIMU shell or by simply sourcing the test-case script_
 
-### 5.3.1 Manual Regression Simulation
+### 5.4.1 Manual Regression Simulation 
 
 The manual regression uses a list of test-cases that is manually maintained. An example of that script can be found in _/dev/sim/regression_lists/REGRESSION_TC_LIST_MANUAL.tcl_
 
@@ -132,7 +162,7 @@ A manual regression can't run in multiple parallel threads.
 
 The regression run progress can't be easily monitored.
 
-#### 5.3.1.1 Manual Regression - in Linux TCL interpreter
+#### 5.4.1.1 Manual Regression - using Linux TCL interpreter
 
 **(with/without SIMU shell, with TCL _source_ call, simulator vendor tool independent)**
 
@@ -142,11 +172,11 @@ $ tclsh runme_simu_shell.tcl
 > source ../home/work/des.v/trunk/simu_fixes/simu/dev/sim/regression_lists_templates/REGRESSION_TC_LIST_MANUAL.tcl
 ```
 
-#### 5.3.1.2 Manual Regression - in simulator vendor TCL interpreter
+#### 5.4.1.2 Manual Regression - using simulator vendor TCL interpreter
 
 **(from Linux bash or simulator GUI)**
 
-##### 5.3.1.2.1 ModelSim/QuestaSim vendor TCL interpreter
+##### ModelSim/QuestaSim vendor TCL interpreter
 
 **(can run on Windows OS)**
 
@@ -164,21 +194,23 @@ The example above uses the call to QuestaSim/Modelsim TCL terminal in CLI mode i
 
 The example above is using the QuestaSim/Modelsim TCL interpreter GUI terminal.
 
-##### 5.3.1.2.2 Xilinx XSim vendor TCL interpreter
+##### Xilinx XSim vendor TCL interpreter
 
-##### 5.3.1.2.3 ModelSim/QuestaSim vendor TCL interpreter
+##### ModelSim/QuestaSim vendor TCL interpreter
 
-##### 5.3.1.2.4 ModelSim/QuestaSim vendor TCL interpreter
+##### ModelSim/QuestaSim vendor TCL interpreter
 
-##### 5.3.1.2.5 ModelSim/QuestaSim vendor TCL interpreter
+##### ModelSim/QuestaSim vendor TCL interpreter
 
-### 5.3.2 Automatic Regression - using auto-generated test-case list
+### 5.4.2 Automatic Regression 
 
-The auto-generated test-cases list located in __/dev/sim/regression_lists/_ can be checked for regression progress information, which is a nice feature not available when running manual regression.
+The Automatic Regression gets its name from the auto-generated test-cases list located in __/dev/sim/regression_lists/_. 
 
-Another nice feature of the automated-regression is the option to run several threads in parallel. To accomplish this just open a few terminals and execute in each one a separate regression call. All regression calls will run in their own terminals and will use the auto-generated regression script to pick the next available test-case to run. This parallel execution makes the regression run much faster at the expense of using more simulator licenses, one per thread.
+The auto-generated test-case list can be checked for regression progress information, which is a nice feature not available when running manual regression.
 
-#### 5.3.2.1 Automatic Regression - in Linux TCL interpreter
+Another nice feature of the automated-regression is the option to run several threads in parallel. To accomplish this just open a few terminals and execute in each one a separate regression call. All regression calls will run in their own terminals and will use one auto-generated regression script to pick the next available test-case to run and to exchange information about the next available next test-cases to execute. This parallel execution makes the regression run much faster, but at the expense of using more simulator licenses, one per thread.
+
+#### 5.4.2.1 Automatic Regression - using Linux TCL interpreter
 
 **(with SIMU shell, with SIMU regression call, simulator vendor tool independent)**
 
@@ -188,11 +220,11 @@ $ tclsh runme_simu_shell.tcl
 > source ../scripts_configure/run_regression.tcl
 ```
 
-#### 5.3.2.2 Automatic Regression - in simulator vendor TCL interpreter
+#### 5.4.2.2 Automatic Regression - using simulator vendor TCL interpreter
 
 **(from Linux bash or simulator GUI)**
 
-##### 5.3.2.2.1 ModelSim/QuestaSim vendor TCL interpreter
+##### ModelSim/QuestaSim vendor TCL interpreter
 
 **(can run on Windows OS)**
 
@@ -210,13 +242,13 @@ The example above useds the call to QuestaSim/Modelsim in CLI mode invoked from 
 
 The example above is using the QuestaSim/Modelsim TCL interpreter GUI terminal. 
 
-##### 5.3.2.2.3 Xilinx XSim vendor TCL interpreter
+##### Xilinx XSim vendor TCL interpreter
 
-##### 5.3.2.2.4 ModelSim/QuestaSim vendor TCL interpreter
+##### ModelSim/QuestaSim vendor TCL interpreter
 
-##### 5.3.2.2.5 ModelSim/QuestaSim vendor TCL interpreter
+##### ModelSim/QuestaSim vendor TCL interpreter
 
-##### 5.3.2.2.6 ModelSim/QuestaSim vendor TCL interpreter
+##### ModelSim/QuestaSim vendor TCL interpreter
 
-##### 5.3.2.2.7 ModelSim/QuestaSim vendor TCL interpreter
+##### ModelSim/QuestaSim vendor TCL interpreter
 
