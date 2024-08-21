@@ -72,7 +72,7 @@ It has to be noted that
 
 There are several ways to run simulation of a single test-case. They acheive the same result, running a test-case simulation, but are invoked in different ways using:
 
- * Linux TCL interpreter using tclsh terminal 
+ * Linux TCL interpreter using tclsh terminal  
  * Simulator vendor TCL CLI in bash terminal 
  * Simulator vendor TCL terminal in GUI 
  * _The three use-cases above can be used with or without the SIMU shell_ 
@@ -92,7 +92,7 @@ From he example above, the function _run_testcase_ is used only by the automated
 
 Additionally this function is a unified way to call a vendor simulator if it is hard to remember the vendor simulator specific call with its attributes.
 
-It this example it can be safely replaced by the TCL _source_ command.
+It the example below it can be safely replaced by the TCL _source_ command.
 
 ```
 $ cd symphony/dev/sim/run
@@ -100,7 +100,29 @@ $ tclsh
 > source ../testcases/tc_reset/tc_reset.tcl 
 ```
 
-Alternatively, as seen above, it is also possible not to use the SIMU shell. In this case the user interface lacks history and it is not convenient for use and for that reason it is shown here for completeness, but it is not recommended to be used.
+Alternatively, as seen above, it is also possible not to use the SIMU shell. In this case the user interface lacks history and it is not convenient for use and for that reason it is shown here for completeness, but it is not recommended to be used for not being user friendly.
+
+```
+$ cd symphony/dev/sim/run
+$ tclsh 
+> vsim -c -do ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl -do exit 
+```
+
+Alternatively, as seen above, it is also possible to use the simulator vendor TCL interpreter inside the Linux tclsh interpreter. This is somewhat redundant using two TCL interpreters and not user friendly.
+
+#### tclsh with ModelSim/QuestaSim
+
+#### tclsh with Xilinx XSim
+
+#### tclsh with Xcelium
+
+Specific settings have to be enabled in this mode TODO:
+
+#### tclsh with ActiveHDL
+
+Specific settings have to be enabled in this mode TODO:
+
+#### tclsh with VitisHLS
 
 ### 5.3.2 Test-case simulation - using simulator vendor TCL interpreter
 
@@ -118,16 +140,22 @@ $ vsim -c -do ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common
 The example above is using the QuestaSim/Modelsim TCL interpreter in CLI mode invoked from Linux bash terminal.
 
 ```
-# cd symphony/dev/sim/run
-# source runme_simu_shell.tcl
-# run_testcase ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl
+-- start the simulator vendor GUI
+# vsim
+-- the commands below are executed in the Modelsim/Questa GUI TCL terminal
+> cd symphony/dev/sim/run
+> source runme_simu_shell.tcl
+> run_testcase ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl
 ```
 
 The example above is using the SIMU shell _run_testcase_ function in the QuestaSim/Modelsim TCL interpreter with the SIMU shell in the simulator vendor GUI TCL terminal.
 
 ```
-# cd symphony/dev/sim/run
-# source ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl
+-- start the simulator vendor GUI
+# vsim
+-- the commands below are executed in the Modelsim/Questa GUI TCL terminal
+> cd symphony/dev/sim/run
+> source ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl
 ```
 
 The example above is using the QuestaSim/Modelsim TCL interpreter in simulator vendor GUI TCL terminal.
@@ -136,7 +164,25 @@ The example above is using the QuestaSim/Modelsim TCL interpreter in simulator v
 
 #### Xcelium vendor TCL interpreter
 
+Xcelium TCL interpreter lacks CLI mode and for this reason only the SimVision GUI TCL terminal is available.
+
+```
+-- start the simulator vendor GUI
+# simvision
+-- the commands below are executed in the Modelsim/Questa GUI TCL terminal
+> cd symphony/dev/sim/run
+> source ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl
+```
+
+The example above is using the Xcelium TCL interpreter in simulator vendor GUI TCL terminal.
+
+Specific settings have to be enabled in this mode TODO:
+
+
+
 #### ActiveHDL vendor TCL interpreter
+
+Specific settings have to be enabled in this mode TODO:
 
 #### VitisHLS vendor TCL interpreter
 
