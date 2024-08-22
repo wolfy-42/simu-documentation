@@ -60,21 +60,24 @@ There are several paths that have to be configured before the environment can be
 
 
 
-## 5.3 Run Single Test-Case simulation
+## 5.3 Run Single Test-Case (TC) simulation
 
 It has to be noted that 
 
-1. All test-cases have to be executed executed from the **run** folder > _cd symphony/dev/sim/run_
-2. All test-case names have to start with the **tc_** prefix. This is required by the regression automation and results parsing.
-3. Every HDL test-case is paired with an identical in name TCL script. 
-4. That test-case TCL script is the one actually executed by the SIMU framework. 
-5. The test-case TCL script contains some required by SIMU information, such as several pre-configured paths and the test-case name.
+1. All TCs have to be executed executed from the **run** folder > _cd symphony/dev/sim/run_
+2. All TC names have to start with the **tc_** prefix. This is required by the regression automation and results parsing.
+3. Every HDL TC is paired with an identical in name TCL script. Similarly every HLS TC is paired with an almost identical in name TCL scripts where the suffix might differ for the TCL file to indicate different type of HLS TC execution.
+4. That TC TCL script is the one actually executed by the SIMU framework. 
+5. The TC TCL script contains some required by SIMU information, such as several pre-configured paths, the test-case name, also one parameter for HLS TC type of execution.
 
-There are several ways to run simulation of a single test-case. They acheive the same result, running a test-case simulation, but are invoked in different ways using:
+There are several ways to run simulation of a single test-case. They achieve the same result, running a test-case simulation, but are invoked in different ways using:
 
- * Linux TCL interpreter using tclsh terminal  
- * Simulator vendor TCL CLI in bash terminal 
- * Simulator vendor TCL terminal in GUI 
+a) Linux TCL interpreter using tclsh terminal  
+
+b) Simulator vendor TCL CLI in bash terminal 
+
+c) Simulator vendor TCL terminal in GUI 
+
  * _The three use-cases above can be used with or without the SIMU shell_ 
  * _The three use-cases above can be used with the run_testcase function form the SIMU shell or by simply "sourcing" the test-case script_
 
@@ -102,42 +105,49 @@ $ tclsh
 
 Alternatively, as seen above, it is also possible not to use the SIMU shell. In this case the user interface lacks history and it is not convenient for use and for that reason it is shown here for completeness, but it is not recommended to be used for not being user friendly.
 
-```
-$ cd symphony/dev/sim/run
-$ tclsh 
-> vsim -c -do ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl -do exit 
-```
+There are several parameters that can be passed in CLI mode:
 
-Alternatively, as seen above, it is also possible to use the simulator vendor TCL interpreter inside the Linux tclsh interpreter. This is somewhat redundant using two TCL interpreters and not user friendly.
+TODO:
 
-#### tclsh with ModelSim/QuestaSim
-
-#### tclsh with Xilinx XSim
-
-#### tclsh with Xcelium
-
-Specific settings have to be enabled in this mode TODO:
-
-#### tclsh with ActiveHDL
-
-Specific settings have to be enabled in this mode TODO:
-
-#### tclsh with VitisHLS
+* PRAM = 1 or 0 - vendor TCL can be disabled or enabled if supported by the vendor
+* 
 
 ### 5.3.2 Test-case simulation - using simulator vendor TCL interpreter
 
 **(from Linux bash or simulator GUI)**
 
+The simulator vendor tools differ in a few ways:
+
+a) all vendors support simulation tools calls (for example vmap, vcom, vsim, etc.) as bash or terminal commands 
+
+b) some vendors have the simulation tools calls (for example vmap, vcom, vsim, etc.) integrated as TCL commands in their TCL interpreters 
+
+c) all vendors have TCL GUI terminal
+
+d) some vendors TCL interpreter supports CLI mode, others don't
+
+e) some vendors have a separate license for waveform viewing which is way less expensive compared to the simulator license
+
 #### ModelSim/QuestaSim vendor TCL interpreter
 
 **(with/without SIMU shell, with/without SIMU _run_testcase_ simulation call, from Linux bash or from simulator vendor GUI, can run on Windows OS)**
+
+ModelSim/Questa TCL interpreter has the following specifics:
+
+a) supports TCL CLI mode and GUI TCL terminal 
+
+b) the simulation tool calls are available as bash terminal commands and are also available as commands in the TCL interpreter
+
+c) there is a separate license for waveform viewing which is way less expensive compared to the simulator license
+
+Below are captured several practically identical ways to execute a TC.
 
 ```
 $ cd symphony/dev/sim/run
 $ vsim -c -do ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl -do exit
 ```
 
-The example above is using the QuestaSim/Modelsim TCL interpreter in CLI mode invoked from Linux bash terminal.
+The example above is using the QuestaSim/Modelsim TCL interpreter in CLI mode invoked from Linux bash terminal or Windows terminal.
 
 ```
 -- start the simulator vendor GUI
@@ -148,7 +158,7 @@ The example above is using the QuestaSim/Modelsim TCL interpreter in CLI mode in
 > run_testcase ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl
 ```
 
-The example above is using the SIMU shell _run_testcase_ function in the QuestaSim/Modelsim TCL interpreter with the SIMU shell in the simulator vendor GUI TCL terminal.
+The example above is using the SIMU shell _run_testcase_ function in the QuestaSim/Modelsim TCL interpreter with the SIMU shell in the simulator vendor GUI TCL terminal started from Linux or Windows terminal.
 
 ```
 -- start the simulator vendor GUI
@@ -158,18 +168,36 @@ The example above is using the SIMU shell _run_testcase_ function in the QuestaS
 > source ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl
 ```
 
-The example above is using the QuestaSim/Modelsim TCL interpreter in simulator vendor GUI TCL terminal.
+The example above is using the QuestaSim/Modelsim TCL interpreter in simulator vendor GUI TCL terminal started from Linux or Windows terminal.
+
+```
+$ cd symphony/dev/sim/run
+$ tclsh 
+> vsim -c -do ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl -do exit 
+```
+
+Alternatively, as seen above, it is also possible to use the simulator vendor TCL interpreter inside the Linux tclsh interpreter. This is somewhat redundant using two TCL interpreters and not that user friendly.
+
+Specific settings have to be enabled in this mode TODO:
+
+
 
 #### Xilinx XSim vendor TCL interpreter
 
+
+
 #### Xcelium vendor TCL interpreter
 
-Xcelium TCL interpreter lacks CLI mode and for this reason only the SimVision GUI TCL terminal is available.
+Xcelium TCL interpreter has the following specifics:
+
+a) lacks TCL CLI mode and for this reason only the SimVision GUI TCL terminal is available
+
+b) the simulation tool calls are only available as bash terminal commands and are not available as commands in the TCL interpreter
 
 ```
 -- start the simulator vendor GUI
 # simvision
--- the commands below are executed in the Modelsim/Questa GUI TCL terminal
+-- the commands below are executed in the SimVision GUI TCL terminal
 > cd symphony/dev/sim/run
 > source ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl
 ```
@@ -178,15 +206,17 @@ The example above is using the Xcelium TCL interpreter in simulator vendor GUI T
 
 Specific settings have to be enabled in this mode TODO:
 
-
+* param = 0 - disable vendor TCL interpreter 
 
 #### ActiveHDL vendor TCL interpreter
 
 Specific settings have to be enabled in this mode TODO:
 
+
+
 #### VitisHLS vendor TCL interpreter
 
-#### Other vendor TCL interpreter
+
 
 ## 5.4 Run Regression Simulation
 
@@ -194,9 +224,12 @@ There are several ways to run a regression simulation of all test-cases. They ac
 
 It has to be noted that a regression call can be executed in all different ways similar to the individual test-cases run execution types, as it was already covered:
 
- * Linux TCL interpreter using tclsh terminal
- * simulator vendor TCL CLI in bash terminal 
- * simulator vendor TCL terminal in GUI - can be used to run simulations on Windows OS
+a) Linux TCL interpreter using tclsh terminal
+
+b) simulator vendor TCL CLI in bash terminal 
+
+c) simulator vendor TCL terminal in GUI - can be used to run simulations on Windows OS
+
  * _The three use-cases above can be used with or without the SIMU shell_ 
  * _The three use-cases above can be used with the run_testcase function form the SIMU shell or by simply sourcing the test-case script_
 
@@ -226,27 +259,70 @@ $ tclsh runme_simu_shell.tcl
 
 **(can run on Windows OS)**
 
+ModelSim/Questa TCL interpreter has the following specifics:
+
+a) supports TCL CLI mode and GUI TCL terminal 
+
+b) the simulation tool calls are available as bash terminal commands and are also available as commands in the TCL interpreter
+
+Below are captured several practically identical ways to execute regression.
+
 ```
 $ cd symphony/dev/sim/run
 $ vsim -c -do ../home/work/des.v/trunk/simu_fixes/simu/dev/sim/regression_lists_templates/REGRESSION_TC_LIST_MANUAL.tcl
 ```
 
-The example above uses the call to QuestaSim/Modelsim TCL terminal in CLI mode invoked from Linux bash sell.
+The example above uses the call to QuestaSim/Modelsim TCL terminal in CLI mode invoked from Linux bash shell or Windows terminal
+
+```
+-- start the simulator vendor GUI
+# vsim
+-- the commands below are executed in the Modelsim/Questa GUI TCL terminal
+> cd symphony/dev/sim/run
+> source ../home/work/des.v/trunk/simu_fixes/simu/dev/sim/regression_lists_templates/REGRESSION_TC_LIST_MANUAL.tcl
+```
+
+The example above is using the QuestaSim/Modelsim TCL interpreter GUI terminal on Linux or Windows.
 
 ```
 # cd symphony/dev/sim/run
-# source ../home/work/des.v/trunk/simu_fixes/simu/dev/sim/regression_lists_templates/REGRESSION_TC_LIST_MANUAL.tcl
+# tclsh 
+> vsim -c -do ../home/work/des.v/trunk/simu_fixes/simu/dev/sim/regression_lists_templates/REGRESSION_TC_LIST_MANUAL.tcl
 ```
 
-The example above is using the QuestaSim/Modelsim TCL interpreter GUI terminal.
+Alternatively, as seen above, it is also possible to use the simulator vendor TCL interpreter inside the Linux tclsh interpreter. This is somewhat redundant using two TCL interpreters and not user friendly.
 
 ##### Xilinx XSim vendor TCL interpreter
 
-##### ModelSim/QuestaSim vendor TCL interpreter
 
-##### ModelSim/QuestaSim vendor TCL interpreter
 
-##### ModelSim/QuestaSim vendor TCL interpreter
+##### Xcelium vendor TCL interpreter
+
+Xcelium TCL interpreter has the following specifics:
+
+a) lacks TCL CLI mode, only the SimVision GUI TCL terminal is available
+
+b) the simulation tool calls are only available as bash terminal commands and are not available as commands in the TCL interpreter
+
+```
+-- start the simulator vendor GUI
+# simvision
+-- the commands below are executed in the SimVision GUI TCL terminal
+> cd symphony/dev/sim/run
+> source ../home/work/des.v/trunk/simu_fixes/simu/dev/sim/regression_lists_templates/REGRESSION_TC_LIST_MANUAL.tcl
+```
+
+The example above is using the Xcelium TCL interpreter in simulator vendor GUI TCL terminal.
+
+Specific settings have to be enabled in this mode TODO:
+
+##### ActiveHDL vendor TCL interpreter
+
+
+
+##### VitisHLS vendor TCL interpreter
+
+
 
 ### 5.4.2 Automatic Regression 
 
@@ -260,11 +336,29 @@ Another nice feature of the automated-regression is the option to run several th
 
 **(with SIMU shell, with SIMU regression call, simulator vendor tool independent)**
 
+Both ways to call regression, as captured below,  are identical.
+
 ```
 $ cd symphony/dev/sim/run
 $ tclsh runme_simu_shell.tcl
 > source ../scripts_configure/run_regression.tcl
 ```
+
+The call above is executing directly the regression script.
+
+```
+$ cd symphony/dev/sim/run
+$ tclsh runme_simu_shell.tcl
+> run_regression
+```
+
+Alternatively, using the SIMU library it is possible to call regression using the _run_regression_ function, as shown above.
+
+There are several parameters that can be passed in CLI mode:
+
+TODO:
+
+
 
 #### 5.4.2.2 Automatic Regression - using simulator vendor TCL interpreter
 

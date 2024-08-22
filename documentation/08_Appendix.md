@@ -5,6 +5,8 @@
 [^1]: TC - Test-Case
 [^2]: TB - Test-Bench
 
+[^3]: CLI - Command Line Interface
+
 
 
 ## External References
