@@ -7,7 +7,7 @@
 
 [^3]: CLI - Command Line Interface
 
-
+[^4]: SVTI - Simulator Vendor TCL Interpreter
 
 ## External References
 

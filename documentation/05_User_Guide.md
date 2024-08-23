@@ -83,7 +83,16 @@ c) Simulator vendor TCL terminal in GUI
 
 ### 5.3.1 Test-case simulation - using Linux TCL interpreter
 
-**(with/without SIMU shell, with/without SIMU _run_testcase_ simulation call, simulator vendor tool independent)**
+**(with/without SIMU shell, with/without SIMU _run_testcase_ simulation call, with/without SVTI in CLI mode, simulator vendor tool independent)**
+
+Specific settings have to be enabled in this mode TODO:
+
+* param = 0 - disable vendor TCL interpreter 
+
+There are several parameters that can be passed in CLI mode (passing CLI parameters is possible when using third party TCL like _tclsh_, but not all TCL interpreters support that, for example ModelSim/Quartus parameters passing is different and for this reason not supported by SIMU) TODO:
+
+* PRAM = 1 or 0 - vendor TCL can be disabled or enabled if supported by the vendor
+* add examples here
 
 ```
 $ cd symphony/dev/sim/run
@@ -105,14 +114,11 @@ $ tclsh
 
 Alternatively, as seen above, it is also possible not to use the SIMU shell. In this case the user interface lacks history and it is not convenient for use and for that reason it is shown here for completeness, but it is not recommended to be used for not being user friendly.
 
-There are several parameters that can be passed in CLI mode:
+TODO: add examples with parameters passing
 
-TODO:
 
-* PRAM = 1 or 0 - vendor TCL can be disabled or enabled if supported by the vendor
-* 
 
-### 5.3.2 Test-case simulation - using simulator vendor TCL interpreter
+### 5.3.2 Test-case simulation - using simulator vendor TCL interpreter (SVTCLI)
 
 **(from Linux bash or simulator GUI)**
 
@@ -128,7 +134,7 @@ d) some vendors TCL interpreter supports CLI mode, others don't
 
 e) some vendors have a separate license for waveform viewing which is way less expensive compared to the simulator license
 
-#### ModelSim/QuestaSim vendor TCL interpreter
+#### ModelSim/QuestaSim TCL interpreter
 
 **(with/without SIMU shell, with/without SIMU _run_testcase_ simulation call, from Linux bash or from simulator vendor GUI, can run on Windows OS)**
 
@@ -139,6 +145,10 @@ a) supports TCL CLI mode and GUI TCL terminal
 b) the simulation tool calls are available as bash terminal commands and are also available as commands in the TCL interpreter
 
 c) there is a separate license for waveform viewing which is way less expensive compared to the simulator license
+
+Specific settings have to be enabled in this mode TODO:
+
+* param = 0 - disable vendor TCL interpreter 
 
 Below are captured several practically identical ways to execute a TC.
 
@@ -176,23 +186,35 @@ $ tclsh
 > vsim -c -do ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl -do exit 
 ```
 
-Alternatively, as seen above, it is also possible to use the simulator vendor TCL interpreter inside the Linux tclsh interpreter. This is somewhat redundant using two TCL interpreters and not that user friendly.
+Alternatively, as seen above, it is also possible to use the SVTI inside the Linux tclsh interpreter. This is somewhat redundant using two TCL interpreters and not that user friendly.
+
+#### Xilinx XSim TCL interpreter
+
+Vivado TCL interpreter has the following specifics:
+
+a) supports TCL CLI mode in Linux bash and GUI TCL terminal from Vivado 
+
+b) the simulation tool calls are available as bash terminal commands and are also available as commands in the vendor TCL interpreter
 
 Specific settings have to be enabled in this mode TODO:
 
+* param = 0 - disable vendor TCL interpreter 
+
+TODO: add call examples
 
 
-#### Xilinx XSim vendor TCL interpreter
 
-
-
-#### Xcelium vendor TCL interpreter
+#### Xcelium TCL interpreter
 
 Xcelium TCL interpreter has the following specifics:
 
-a) lacks TCL CLI mode and for this reason only the SimVision GUI TCL terminal is available
+a) It is not possible to call the VTCI in Linux bash terminal.  As a result, only the SimVision GUI TCL terminal is available.
 
-b) the simulation tool calls are only available as bash terminal commands and are not available as commands in the TCL interpreter
+b) The simulation tool calls are only available as bash terminal commands and are not available as commands in the TCL interpreter
+
+Specific settings have to be enabled in this mode TODO:
+
+* param = 0 - disable vendor TCL interpreter 
 
 ```
 -- start the simulator vendor GUI
@@ -202,21 +224,31 @@ b) the simulation tool calls are only available as bash terminal commands and ar
 > source ../testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl
 ```
 
-The example above is using the Xcelium TCL interpreter in simulator vendor GUI TCL terminal.
+The example above is using the Xcelium TCL interpreter in simulator vendor GUI TCL terminal called Simvision.
+
+#### ActiveHDL TCL interpreter
+
+ActiveHDL TCL interpreter has the following specifics:
+
+a) Supports TCL CLI mode in a vendor developed terminal application and GUI TCL terminal from ActiveHDL. It is not possible to call the SVTCLI in Linux bash terminal. As a result the two vendor TCL interpreters differ in some aspects which require specific configurations in SIMU. 
+
+b) The simulation tool calls are available as bash terminal commands and are also available as commands in the vendor TCL interpreter TODO: check this statement
 
 Specific settings have to be enabled in this mode TODO:
 
 * param = 0 - disable vendor TCL interpreter 
 
-#### ActiveHDL vendor TCL interpreter
-
-Specific settings have to be enabled in this mode TODO:
+TODO: add call examples, they should be similar to the Modelsim/Quartus calls.
 
 
 
-#### VitisHLS vendor TCL interpreter
+#### VitisHLS TCL interpreter
 
+VitisHLS TCL interpreter has the following specifics:
 
+a) There is no SVTCLI in CLI or GUI variants. As a result only the Linux _tclsh_ TCL interpreter should be used.
+
+~TODO:investigate_using_VitisHLS_option_to_pass_a_TCL_file_for_execution.~
 
 ## 5.4 Run Regression Simulation
 
@@ -245,25 +277,31 @@ The regression run progress can't be easily monitored.
 
 **(with/without SIMU shell, with TCL _source_ call, simulator vendor tool independent)**
 
+Specific settings have to be enabled in this mode TODO:
+
+* param = 0 - disable vendor TCL interpreter 
+
+Passing CLI parameters is not supported when using manual regression.
+
 ```
 $ cd symphony/dev/sim/run
 $ tclsh runme_simu_shell.tcl
 > source ../home/work/des.v/trunk/simu_fixes/simu/dev/sim/regression_lists_templates/REGRESSION_TC_LIST_MANUAL.tcl
 ```
 
-#### 5.4.1.2 Manual Regression - using simulator vendor TCL interpreter
+#### 5.4.1.2 Manual Regression - using SVTCLI
 
 **(from Linux bash or simulator GUI)**
 
-##### ModelSim/QuestaSim vendor TCL interpreter
+##### ModelSim/QuestaSim TCL interpreter
 
 **(can run on Windows OS)**
 
 ModelSim/Questa TCL interpreter has the following specifics:
 
-a) supports TCL CLI mode and GUI TCL terminal 
+a) Supports TCL CLI mode and GUI TCL terminal 
 
-b) the simulation tool calls are available as bash terminal commands and are also available as commands in the TCL interpreter
+b) The simulation tool calls are available as bash terminal commands and are also available as commands in the TCL interpreter
 
 Below are captured several practically identical ways to execute regression.
 
@@ -290,19 +328,35 @@ The example above is using the QuestaSim/Modelsim TCL interpreter GUI terminal o
 > vsim -c -do ../home/work/des.v/trunk/simu_fixes/simu/dev/sim/regression_lists_templates/REGRESSION_TC_LIST_MANUAL.tcl
 ```
 
-Alternatively, as seen above, it is also possible to use the simulator vendor TCL interpreter inside the Linux tclsh interpreter. This is somewhat redundant using two TCL interpreters and not user friendly.
+Alternatively, as seen above, it is also possible to use the SVTI inside the Linux tclsh interpreter. This is somewhat redundant using two TCL interpreters and not user friendly.
 
-##### Xilinx XSim vendor TCL interpreter
+##### Xilinx XSim TCL interpreter
+
+Vivado TCL interpreter has the following specifics:
+
+a) supports TCL CLI mode in Linux bash and GUI TCL terminal from Vivado 
+
+b) the simulation tool calls are available as bash terminal commands and are also available as commands in the vendor TCL interpreter
+
+Specific settings have to be enabled in this mode TODO:
+
+* param = 0 - disable vendor TCL interpreter 
+
+TODO: add call examples
 
 
 
-##### Xcelium vendor TCL interpreter
+##### Xcelium TCL interpreter
 
 Xcelium TCL interpreter has the following specifics:
 
-a) lacks TCL CLI mode, only the SimVision GUI TCL terminal is available
+a) It is not possible to call the VTCI in Linux bash terminal.  As a result, only the SimVision GUI TCL terminal is available.
 
-b) the simulation tool calls are only available as bash terminal commands and are not available as commands in the TCL interpreter
+b) The simulation tool calls are only available as bash terminal commands and are not available as commands in the TCL interpreter
+
+Specific settings have to be enabled in this mode TODO:
+
+* param = 0 - disable vendor TCL interpreter 
 
 ```
 -- start the simulator vendor GUI
@@ -312,17 +366,33 @@ b) the simulation tool calls are only available as bash terminal commands and ar
 > source ../home/work/des.v/trunk/simu_fixes/simu/dev/sim/regression_lists_templates/REGRESSION_TC_LIST_MANUAL.tcl
 ```
 
-The example above is using the Xcelium TCL interpreter in simulator vendor GUI TCL terminal.
+The example above is using the Xcelium TCL interpreter in simulator vendor GUI TCL terminal Simvision.
+
+IMPORTANT: TODO:regression not tested yet in Linux _tclsh_ or Simvision GUI TCL , but it is expected to be functional.
+
+##### ActiveHDL TCL interpreter
+
+ActiveHDL TCL interpreter has the following specifics:
+
+a) Supports TCL CLI mode in a vendor developed terminal application and GUI TCL terminal from ActiveHDL. It is not possible to call the SVTCLI in Linux bash terminal. As a result the two vendor TCL interpreters differ in some aspects which require specific configurations in SIMU. 
+
+b) The simulation tool calls are available as bash terminal commands and are also available as commands in the vendor TCL interpreter TODO: check this statement
 
 Specific settings have to be enabled in this mode TODO:
 
-##### ActiveHDL vendor TCL interpreter
+* param = 0 - disable vendor TCL interpreter 
+
+TODO: add call examples, they should be similar to the Modelsim/Quartus calls.
 
 
 
-##### VitisHLS vendor TCL interpreter
+##### VitisHLS TCL interpreter
 
+VitisHLS TCL interpreter has the following specifics:
 
+a) There is no SVTCLI in CLI or GUI variants. As a result only the Linux _tclsh_ TCL interpreter should be used.
+
+~TODO:investigate_using_VitisHLS_option_to_pass_a_TCL_file_for_execution.~
 
 ### 5.4.2 Automatic Regression 
 
@@ -332,9 +402,20 @@ The auto-generated test-case list can be checked for regression progress informa
 
 Another nice feature of the automated-regression is the option to run several threads in parallel. To accomplish this just open a few terminals and execute in each one a separate regression call. All regression calls will run in their own terminals and will use one auto-generated regression script to pick the next available test-case to run and to exchange information about the next available next test-cases to execute. This parallel execution makes the regression run much faster, but at the expense of using more simulator licenses, one per thread.
 
+IMPORTANT: If the regression hangs, it is possible that the regression list has no free test-cases to be taken. A solution to this is to just delete the automatically generated regression list or edit it in a text editor to replace stale _"taken"_ status to _"available"_ status.
+
 #### 5.4.2.1 Automatic Regression - using Linux TCL interpreter
 
 **(with SIMU shell, with SIMU regression call, simulator vendor tool independent)**
+
+Specific settings have to be enabled in this mode TODO:
+
+* param = 0 - disable vendor TCL interpreter 
+
+There are several parameters that can be passed in CLI mode (passing CLI parameters is possible when using third party TCL like _tclsh_, but not all TCL interpreters support that, for example ModelSim/Quartus parameters passing is different and for this reason not supported by SIMU) TODO:
+
+* PRAM = 1 or 0 - vendor TCL can be disabled or enabled if supported by the vendor
+* add examples here
 
 Both ways to call regression, as captured below,  are identical.
 
@@ -354,26 +435,30 @@ $ tclsh runme_simu_shell.tcl
 
 Alternatively, using the SIMU library it is possible to call regression using the _run_regression_ function, as shown above.
 
-There are several parameters that can be passed in CLI mode:
-
-TODO:
+TODO: add examples with parameters passing
 
 
 
-#### 5.4.2.2 Automatic Regression - using simulator vendor TCL interpreter
+#### 5.4.2.2 Automatic Regression - using SVTCLI
 
 **(from Linux bash or simulator GUI)**
 
-##### ModelSim/QuestaSim vendor TCL interpreter
+##### ModelSim/QuestaSim TCL interpreter
 
 **(can run on Windows OS)**
+
+ModelSim/Questa TCL interpreter has the following specifics:
+
+a) Supports TCL CLI mode and GUI TCL terminal 
+
+b) The simulation tool calls are available as bash terminal commands and are also available as commands in the TCL interpreter
 
 ```
 $ cd symphony/dev/sim/run
 $ vsim -c -do ../scripts_configure/run_regression.tcl -do exit
 ```
 
-The example above useds the call to QuestaSim/Modelsim in CLI mode invoked from Linux bash sell.
+The example above uses the call to QuestaSim/Modelsim in CLI mode invoked from Linux bash shell.
 
 ```
 # cd symphony/dev/sim/run
@@ -382,13 +467,67 @@ The example above useds the call to QuestaSim/Modelsim in CLI mode invoked from 
 
 The example above is using the QuestaSim/Modelsim TCL interpreter GUI terminal. 
 
-##### Xilinx XSim vendor TCL interpreter
+##### Xilinx XSim TCL interpreter
 
-##### ModelSim/QuestaSim vendor TCL interpreter
+Vivado TCL interpreter has the following specifics:
 
-##### ModelSim/QuestaSim vendor TCL interpreter
+a) Supports TCL CLI mode in Linux bash and GUI TCL terminal from Vivado 
 
-##### ModelSim/QuestaSim vendor TCL interpreter
+b) The simulation tool calls are available as bash terminal commands and are also available as commands in the vendor TCL interpreter
 
-##### ModelSim/QuestaSim vendor TCL interpreter
+Specific settings have to be enabled in this mode TODO:
+
+* param = 0 - disable vendor TCL interpreter 
+
+TODO: add call examples
+
+
+
+##### Xcelium TCL interpreter
+
+Xcelium TCL interpreter has the following specifics:
+
+a) It is not possible to call the SVTCLI in Linux bash terminal.  As a result, only the SimVision GUI TCL terminal is available.
+
+b) The simulation tool calls are only available as bash terminal commands and are not available as commands in the TCL interpreter
+
+Specific settings have to be enabled in this mode TODO:
+
+* param = 0 - disable vendor TCL interpreter 
+
+```
+-- start the simulator vendor GUI
+# simvision
+-- the commands below are executed in the SimVision GUI TCL terminal
+> cd symphony/dev/sim/run
+> source ../scripts_configure/run_regression.tcl
+```
+
+The example above is using the Xcelium TCL interpreter in simulator vendor GUI TCL terminal Simvision.
+
+IMPORTANT: TODO:regression not tested yet in Linux _tclsh_ or Simvision GUI TCL , but it is expected to be functional.
+
+##### ActiveHDL TCL interpreter
+
+ActiveHDL TCL interpreter has the following specifics:
+
+a) Supports TCL CLI mode in a vendor developed terminal application and GUI TCL terminal from ActiveHDL. It is not possible to call the SVTCLI in Linux bash terminal. As a result the two vendor TCL interpreters differ in some aspects which require specific configurations in SIMU. 
+
+b) The simulation tool calls are available as bash terminal commands and are also available as commands in the vendor TCL interpreter TODO: check this statement
+
+Specific settings have to be enabled in this mode TODO:
+
+* param = 0 - disable vendor TCL interpreter 
+
+TODO: add call examples, they should be similar to the Modelsim/Quartus calls.
+
+
+
+##### VitisHLS TCL interpreter
+
+VitisHLS TCL interpreter has the following specifics:
+
+a) There is no SVTCLI in CLI or GUI variants. As a result only the Linux _tclsh_ TCL interpreter should be used.
+
+~TODO:investigate_using_VitisHLS_option_to_pass_a_TCL_file_for_execution.~
 
