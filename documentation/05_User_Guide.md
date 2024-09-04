@@ -14,8 +14,8 @@ If new test-cases are created then some configurations have to chanchanged, see 
 
 There are several paths that have to be configured before the environment can be used:
 
-1. Paths in the general script
-2. Paths in the test-case script
+1. Paths in the general sim/scripts
+2. Paths in the sim/test-cases script
 
 ### HDL Flow Options Configuration
 
@@ -43,18 +43,23 @@ The test-case/test-bench folder in the regression config script
 
 ## 5.2 SIMU HLS Configuration
 
+### HLS Flow Paths Configuration
+
 There are several paths that have to be configured before the environment can be used:
 
-1. Paths in the general script
-2. Paths in the test-case script
-
-### HLS Flow Paths Configuration
+1. Paths in the general sim/scripts folder
+2. Paths in the sim/test-cases folder
+3. Paths in build/scripts folder
 
 ### HLS Flow Options Configuration
 
+The HLS Vitis project is created from TCL sources in every run. The project that is run for simulation, synthesis or export is a Vitis project that can be open in Vitis GUI after the run. The Vitis project is deleted before every new run unless that is disabled in the configuration file. 
 
+If the Vitis project deleting option is disabled before the new run, the designer has to pay attention not to have conflicting residual configurations in the Vitis design from the previous run because the project creation scripts will overwrite some settings.
 
 ### HLS Test-cases, test-benches, HLS Configuration
+
+
 
 ### HLS Regression Configuration
 
@@ -118,7 +123,7 @@ TODO: add examples with parameters passing
 
 
 
-### 5.3.2 Test-case simulation - using simulator vendor TCL interpreter (SVTCLI)
+### 5.3.2 Test-case simulation - using simulator vendor TCL interpreter (SVTCL)
 
 **(from Linux bash or simulator GUI)**
 
@@ -230,7 +235,7 @@ The example above is using the Xcelium TCL interpreter in simulator vendor GUI T
 
 ActiveHDL TCL interpreter has the following specifics:
 
-a) Supports TCL CLI mode in a vendor developed terminal application and GUI TCL terminal from ActiveHDL. It is not possible to call the SVTCLI in Linux bash terminal. As a result the two vendor TCL interpreters differ in some aspects which require specific configurations in SIMU. 
+a) Supports TCL CLI mode in a vendor developed terminal application and GUI TCL terminal from ActiveHDL. It is not possible to call the SVTCL in Linux bash terminal. As a result the two vendor TCL interpreters differ in some aspects which require specific configurations in SIMU. 
 
 b) The simulation tool calls are available as bash terminal commands and are also available as commands in the vendor TCL interpreter TODO: check this statement
 
@@ -246,7 +251,7 @@ TODO: add call examples, they should be similar to the Modelsim/Quartus calls.
 
 VitisHLS TCL interpreter has the following specifics:
 
-a) There is no SVTCLI in CLI or GUI variants. As a result only the Linux _tclsh_ TCL interpreter should be used.
+a) There is no SVTCL in CLI or GUI variants in VitisHLS. As a result only the Linux _tclsh_ TCL interpreter should be used.
 
 ~TODO:investigate_using_VitisHLS_option_to_pass_a_TCL_file_for_execution.~
 
@@ -289,7 +294,7 @@ $ tclsh runme_simu_shell.tcl
 > source ../home/work/des.v/trunk/simu_fixes/simu/dev/sim/regression_lists_templates/REGRESSION_TC_LIST_MANUAL.tcl
 ```
 
-#### 5.4.1.2 Manual Regression - using SVTCLI
+#### 5.4.1.2 Manual Regression - using SVTCL
 
 **(from Linux bash or simulator GUI)**
 
@@ -374,7 +379,7 @@ IMPORTANT: TODO:regression not tested yet in Linux _tclsh_ or Simvision GUI TCL 
 
 ActiveHDL TCL interpreter has the following specifics:
 
-a) Supports TCL CLI mode in a vendor developed terminal application and GUI TCL terminal from ActiveHDL. It is not possible to call the SVTCLI in Linux bash terminal. As a result the two vendor TCL interpreters differ in some aspects which require specific configurations in SIMU. 
+a) Supports TCL CLI mode in a vendor developed terminal application and GUI TCL terminal from ActiveHDL. It is not possible to call the SVTCL in Linux bash terminal. As a result the two vendor TCL interpreters differ in some aspects which require specific configurations in SIMU. 
 
 b) The simulation tool calls are available as bash terminal commands and are also available as commands in the vendor TCL interpreter TODO: check this statement
 
@@ -390,7 +395,7 @@ TODO: add call examples, they should be similar to the Modelsim/Quartus calls.
 
 VitisHLS TCL interpreter has the following specifics:
 
-a) There is no SVTCLI in CLI or GUI variants. As a result only the Linux _tclsh_ TCL interpreter should be used.
+a) There is no SVTCL in CLI or GUI variants. As a result only the Linux _tclsh_ TCL interpreter should be used.
 
 ~TODO:investigate_using_VitisHLS_option_to_pass_a_TCL_file_for_execution.~
 
@@ -439,7 +444,7 @@ TODO: add examples with parameters passing
 
 
 
-#### 5.4.2.2 Automatic Regression - using SVTCLI
+#### 5.4.2.2 Automatic Regression - using SVTCL
 
 **(from Linux bash or simulator GUI)**
 
@@ -487,7 +492,7 @@ TODO: add call examples
 
 Xcelium TCL interpreter has the following specifics:
 
-a) It is not possible to call the SVTCLI in Linux bash terminal.  As a result, only the SimVision GUI TCL terminal is available.
+a) It is not possible to call the SVTCL in Linux bash terminal.  As a result, only the SimVision GUI TCL terminal is available.
 
 b) The simulation tool calls are only available as bash terminal commands and are not available as commands in the TCL interpreter
 
@@ -511,7 +516,7 @@ IMPORTANT: TODO:regression not tested yet in Linux _tclsh_ or Simvision GUI TCL 
 
 ActiveHDL TCL interpreter has the following specifics:
 
-a) Supports TCL CLI mode in a vendor developed terminal application and GUI TCL terminal from ActiveHDL. It is not possible to call the SVTCLI in Linux bash terminal. As a result the two vendor TCL interpreters differ in some aspects which require specific configurations in SIMU. 
+a) Supports TCL CLI mode in a vendor developed terminal application and GUI TCL terminal from ActiveHDL. It is not possible to call the SVTCL in Linux bash terminal. As a result the two vendor TCL interpreters differ in some aspects which require specific configurations in SIMU. 
 
 b) The simulation tool calls are available as bash terminal commands and are also available as commands in the vendor TCL interpreter TODO: check this statement
 
@@ -527,7 +532,7 @@ TODO: add call examples, they should be similar to the Modelsim/Quartus calls.
 
 VitisHLS TCL interpreter has the following specifics:
 
-a) There is no SVTCLI in CLI or GUI variants. As a result only the Linux _tclsh_ TCL interpreter should be used.
+a) There is no SVTCL in CLI or GUI variants. As a result only the Linux _tclsh_ TCL interpreter should be used.
 
 ~TODO:investigate_using_VitisHLS_option_to_pass_a_TCL_file_for_execution.~
 

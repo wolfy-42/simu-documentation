@@ -67,11 +67,11 @@ The previously supported features will be maintained in the new SIMU reversion, 
 
 ## OS and TCL Interpreters
 
-| OS       | Vendor     | Version | SIMU Mode                                     | SIMU rev. | Feature ID[^f1] |
-| -------- | ---------- | ------- | --------------------------------------------- | --------- | --------------- |
-| Windows® | Microsoft® | 10      | simulator vendor TCL shell                    | 4.6       | f500            |
-| RedHat®  | RedHat®    | 7,8     | simulator vendor TCL shell, Linux tclsh shell | 4.6       | f501            |
-| Linux    | Linux      |         | simulator vendor TCL shell, Linux tclsh shell | 4.6       | f502            |
+| OS       | Vendor           | Version | SIMU Mode                                     | SIMU rev. | Feature ID[^f1] |
+| -------- | ---------------- | ------- | --------------------------------------------- | --------- | --------------- |
+| Windows® | Microsoft®       | 10      | simulator vendor TCL shell                    | 4.6       | f500            |
+| RedHat®  | RedHat®          | 7,8     | simulator vendor TCL shell, Linux tclsh shell | 4.6       | f501            |
+| Linux    | any Linux distro |         | simulator vendor TCL shell, Linux tclsh shell | 4.6       | f502            |
 
 ## HDL Languge
 
