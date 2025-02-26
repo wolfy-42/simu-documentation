@@ -1,45 +1,168 @@
 # 5. User Guide
 
-In the examples below we will use Mentor's Questa&reg; simulator calls. Other simulators will have very similar, almost identical calls and behaviour.
+Unless noted psecifically, in the examples below we will use SystemVerilog test-cases and Mentor's Questa&reg; HDL simulator calls. Other HDL languages and simulators will have very similar, almost identical calls and behaviour.
 
-## 5.1 SIMU HDL Configuration
+## 5.1 SIMU HDL Flow and Configuration
 
-The cloned repo doesn't need any configuration to run the existing test-cases, except the avalability of the simulation tools and licenses.
+The cloned repo doesn't need any configuration to run the existing test-cases examples, except the availability of the simulation tools and licenses.
 
 If a vendor specific IPs or primitives are used, the HDL vendor libraries have to be compiled as well.
 
-If new test-cases are created then some configurations have to chanchanged, see details further below.
+If new test-cases are created then some configurations have to changed accordingly, see details further below.
 
-### HDL Flow Paths Configuration
+### 5.1.1 Paths Configuration
 
-There are several paths that have to be configured before the environment can be used:
+There are several paths that may be configured before the environment can be used. This is not required unless new folders are created or existing files or folders are moved or renamed.
 
-1. Paths in the general sim/scripts
-2. Paths in the sim/test-cases script
+There are three places where the file/folder paths are configured:
 
-### HDL Flow Options Configuration
+```
+dev/sim/scripts_config/...
+dev/sim/testcases_env...
+dev/builds/axiburst_write/...
+```
 
-Configure the command line options script
+1. Paths in _dev/sim/scripts_config/..._ - SIMU central configuration place 
+2. Paths in _dev/sim/testcases_env..._ - test-case specific configurations
+3. Paths in _dev/builds/axiburst_write/..._ - HLS project specific configurations
 
-#### TC execution flow option
+### 5.1.2 Command Line Options Default
 
-1. 
+The command line options script located in:
 
-#### Regression execution flow options
+```
+dev/sim/scripts_config/config_cmd_line_options_default.tcl
+```
 
-1. 
+This file contains the default options during CLI calls. During CLI call it is possible to override some configs defined in this file.
 
-### HDL Test-cases, test-benches, RTL Configuration
+Here you can define/change many options like simulator vendor, simulation optimization, coverage, waveform logging, host terminal/OS, compilation level, etc.
 
-The test-case (TC) name in the test-case TCL script
+NOTE: Not all configuration combinations are possible
 
-The RTL files in the compile_all script
+#### 5.1.2.1 TB/TC execution flow and options
 
-The TB files the TC files in the compile_all script
+It should be noted that there can be many test-benches and every test-bench can be called by many test-cases.
 
-### HDL Regression Configuration
+The test-case (TC) is executed from the run folder:
 
-The test-case/test-bench folder in the regression config script
+```
+cd dev/sim/run
+```
+
+All test-bench(TB) & test-cases(TC) HDL and their TCL scripts are located in folders like:
+
+```
+dev/sim/testcases_envFidus_sv_simMquestaXvivadoCxcelium
+dev/sim/testcases_envXilinx_hls_simXvitisXvivado
+```
+
+The folder name implies that the test-bench & test-cases are/using:
+
+1. using Fidus IP's/DBL's (envFidus), AMD/Xilinx environment IP's (envXilinx), Altera/Intel IP's (envIntel), OSVVM environment IP's (envOsvvm)
+
+2. written in SystemVerilog (\_sv\_), Verilog (\_v\_), VHDL (\_vhdl\_), HLS (\_hls\_)
+3. simulators used are Mentor Questa (Mquesta), Xilinx Vivado XSim (Xvivado), Xilinx Vitis (Xvitis), Cadence Xcelium (Cxcelium)
+
+In the test-cases(TC) folder it is possible to have another level of hierarchy to group similar test-cases by functionality, for example:
+
+```
+dev/sim/testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common
+dev/sim/testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_axis_video
+```
+
+In the example above we have one set of several test-cases and test-benches in _tc_fidus_common_ folder and another set of test-cases and test-benches in _tc_fidus_axis_video_. 
+
+This hierarchy structure allows to have many module level simulations and many top (also called chip level or device level) simulations with many test-cases each which is often need to cover different functionality configurations.
+
+Every TB file (for example _tb.sv_) has a dedicated _compile_all.tcl_ file compiling all TB, TC, BFMs and related RTL. If a different set of TB, TC, BFM, RTL HDL has to be compiled for a different module then a new folder is recommended to be created for that with a different _compile_all.tcl_ file and TB file. The folder looks like this:
+
+```
+/dev/sim/testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/compile_all.sv
+/dev/sim/testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tb.sv
+```
+
+The _tb.sv_ contains the instance of the Device Under Test (DUT) also called Unit Under Test (UUT) which is the instance of the HDL/RTL module to be simulated. In addition to the DUT in the TB we instantiate the BFM Interfaces as well and connect them to the DUT ports, clocks and resets.
+
+Located in the same folder, every TC file has a dedicated TCL script with identical name as the test-case file:
+
+```
+/dev/sim/testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.sv
+/dev/sim/testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/tc_fidus_clock_reset.tcl
+```
+
+The TC is creating a dynamic instance of the BFM and is connecting the BFM to the already instantiate in TB the proper BFM Interface. After the dynamic BFM connection and activation is located the main body of the TC implementing the TC specific functionality.
+
+After executing simulation a _results_folder_ is created to collect the output products from simulation run used for results aggregation processing in regression runs. Some simulation output products might reside in the run folder as well:
+
+```
+/dev/sim/testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_common/results_rtl
+/dev/sim/run
+```
+
+#### 5.1.2.2 Regression execution flow and options
+
+The regression option can be controlled in two places:
+
+1. Command line options file
+
+   ```
+   dev/sim/scripts_config/config_cmd_line_options_default.tcl
+   ```
+
+   This file defines the folders to be scanned in the automatic regression mode and in results aggregation post processing.
+
+   This file defines the TC's to be ignored in the automatic regression mode and in results aggregation post processing. 
+
+2. Regression configurations dedicated settings file
+
+   ```
+   dev/sim/scripts_config/config_settings_regression.tcl
+   ```
+
+The regression concept means that all test-cases are executed sequentially and at the end an aggregated pass/fail status will be reported. In addition aggregated test-coverage report is produced as well. 
+
+There are two types of regressions available in SIMU - automatic regression and manual regression. Both options are available and can be un independently. In long run the automatic recession is going to be deprecated in the favour of the manual regression. Nevertheless in foreseeable future the automatic regression is the only one providing a complete regression aggregation of pass/fail and coverage and for that reason this is the recommended flow. The Manual regression option is a relatively new feature and yet doesn't provide proper multi-folder aggregation of pass/fail and coverage.
+
+The automatic mode executes all TC by parsing the folders and executing all TCL files starting with _tc\_..._ prefix. In this case all TCs are execute in a TCL sorting predetermined sequence since the sorting is performed using the TCL language sorting defaults. This creates some inconvenience in controlling the execution order. 
+
+The manual regression option gives full control over the execution sequence. 
+
+Every regression call performs the following:
+
+1. Executing all TCs in automatic fashion or in manual mode
+2. Automatic TC regression scan and run
+3. TC execution sequence control
+4. Using a different random seed forcing randomization during every new run
+5. Re-run regression with a single forced seed
+6. Pass/Fail aggregation result
+7. Code Coverage aggregation result - scans all _result_rtl_ folders and merges all coverages and reports the aggregate result
+
+### 5.1.3 Simulator Vendor Specific Configurations
+
+Simulator vendor specific configurations are captured in the dedicated files, one per vendor, located in _dev/sim/scripts_config/_:
+
+```
+config_settings_activehdl.tcl   // ActiveHDL simulator configurations
+config_settings_vsim.tcl.       // Mentor Questa/ModelSim configurations
+config_settings_xcelium.tcl     // Cadence Xcelium configurations
+config_settings_xsim.tcl        // Xilinx Vivado XSim configurations
+config_settings_xhls.tcl        // Xilinx Vitis configurations
+```
+
+All vendor specific calls are pre-configured in the files above. The proper vendor file is selected based on the vendor configurations in command line options file here:
+
+```
+dev/sim/scripts_config/config_cmd_line_options_default.tcl
+```
+
+All vendor files follow a similar structure having identical compile/simulate calls. The only more significant exception is the HLS config file since the HLS simulation flow is significantly different compared to the rest of the HDL compile/simulate flows.
+
+
+
+
+
+
 
 ## 5.2 SIMU HLS Configuration
 
