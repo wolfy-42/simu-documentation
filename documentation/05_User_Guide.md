@@ -40,7 +40,7 @@ Here you can define/change many options like simulator vendor, simulation optimi
 
 NOTE: Not all configuration combinations are possible
 
-#### 5.1.2.1 TB/TC execution flow and options
+### 5.1.3 TB/TC Execution Flow and Configurations
 
 It should be noted that there can be many test-benches and every test-bench can be called by many test-cases.
 
@@ -100,7 +100,7 @@ After executing simulation a _results_folder_ is created to collect the output p
 /dev/sim/run
 ```
 
-#### 5.1.2.2 Regression execution flow and options
+### 5.1.4 Regression Execution Flow and Configurations
 
 The regression option can be controlled in two places:
 
@@ -138,7 +138,7 @@ Every regression call performs the following:
 6. Pass/Fail aggregation result
 7. Code Coverage aggregation result - scans all _result_rtl_ folders and merges all coverages and reports the aggregate result
 
-### 5.1.3 Simulator Vendor Specific Configurations
+### 5.1.5 Simulator Vendor Specific Configurations
 
 Simulator vendor specific configurations are captured in the dedicated files, one per vendor, located in _dev/sim/scripts_config/_:
 
@@ -158,13 +158,7 @@ dev/sim/scripts_config/config_cmd_line_options_default.tcl
 
 All vendor files follow a similar structure having identical compile/simulate calls. The only more significant exception is the HLS config file since the HLS simulation flow is significantly different compared to the rest of the HDL compile/simulate flows.
 
-
-
-
-
-
-
-## 5.2 SIMU HLS Configuration
+## 5.2 SIMU HLS Flow and Configuration
 
 ### HLS Flow Paths Configuration
 
