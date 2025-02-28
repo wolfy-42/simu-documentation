@@ -1,8 +1,8 @@
-# 5. User Guide
+# 5. SIMU User Guide
 
 Unless noted psecifically, in the examples below we will use SystemVerilog test-cases and Mentor's Questa&reg; HDL simulator calls. Other HDL languages and simulators will have very similar, almost identical calls and behaviour.
 
-## 5.1 SIMU HDL Flow and Configuration
+## 5.1 HDL Flow and Configuration
 
 The cloned repo doesn't need any configuration to run the existing test-cases examples, except the availability of the simulation tools and licenses.
 
@@ -10,25 +10,25 @@ If a vendor specific IPs or primitives are used, the HDL vendor libraries have t
 
 If new test-cases are created then some configurations have to changed accordingly, see details further below.
 
-### 5.1.1 Paths Configuration
+### 5.1.1 HDL Flow Paths Configuration
 
-There are several paths that may be configured before the environment can be used. This is not required unless new folders are created or existing files or folders are moved or renamed.
+There are several paths that may be configured before the environment can be used. This is not required when using the provided examples. Otherwise when new folders are created or existing files or folders are moved or renamed then some changes will be required.
 
-There are three places where the file/folder paths are configured:
+There are two places where the file/folder paths are configured:
 
 ```
 dev/sim/scripts_config/...
 dev/sim/testcases_env...
-dev/builds/axiburst_write/...
 ```
 
 1. Paths in _dev/sim/scripts_config/..._ - SIMU central configuration place 
 2. Paths in _dev/sim/testcases_env..._ - test-case specific configurations
-3. Paths in _dev/builds/axiburst_write/..._ - HLS project specific configurations
 
-### 5.1.2 Command Line Options Default
+The configuration options are variables inside the TCL files located at these locations.
 
-The command line options script located in:
+### 5.1.2 HDL Command Line Options Default
+
+The default command line options script located in:
 
 ```
 dev/sim/scripts_config/config_cmd_line_options_default.tcl
@@ -36,11 +36,19 @@ dev/sim/scripts_config/config_cmd_line_options_default.tcl
 
 This file contains the default options during CLI calls. During CLI call it is possible to override some configs defined in this file.
 
-Here you can define/change many options like simulator vendor, simulation optimization, coverage, waveform logging, host terminal/OS, compilation level, etc.
+Here you can define/change many options, like:
+
+1. simulator vendor
+2. simulation optimization
+3. coverage
+4. waveform logging
+5. host terminal/OS
+6. compilation level
+7. and other
 
 NOTE: Not all configuration combinations are possible
 
-### 5.1.3 TB/TC Execution Flow and Configurations
+### 5.1.3 HDL TB/TC Execution Flow and Configurations
 
 It should be noted that there can be many test-benches and every test-bench can be called by many test-cases.
 
@@ -73,7 +81,7 @@ dev/sim/testcases_envFidus_sv_simMquestaXvivadoCxcelium/tc_fidus_axis_video
 
 In the example above we have one set of several test-cases and test-benches in _tc_fidus_common_ folder and another set of test-cases and test-benches in _tc_fidus_axis_video_. 
 
-This hierarchy structure allows to have many module level simulations and many top (also called chip level or device level) simulations with many test-cases each which is often need to cover different functionality configurations.
+This hierarchy structure allows to have many module level simulations and many top (also called chip level or device level) simulations with many test-cases each which is often needed to cover different functionality configurations.
 
 Every TB file (for example _tb.sv_) has a dedicated _compile_all.tcl_ file compiling all TB, TC, BFMs and related RTL. If a different set of TB, TC, BFM, RTL HDL has to be compiled for a different module then a new folder is recommended to be created for that with a different _compile_all.tcl_ file and TB file. The folder looks like this:
 
@@ -100,7 +108,7 @@ After executing simulation a _results_folder_ is created to collect the output p
 /dev/sim/run
 ```
 
-### 5.1.4 Regression Execution Flow and Configurations
+### 5.1.4 HDL Regression Execution Flow and Configurations
 
 The regression option can be controlled in two places:
 
@@ -110,15 +118,15 @@ The regression option can be controlled in two places:
    dev/sim/scripts_config/config_cmd_line_options_default.tcl
    ```
 
-   This file defines the folders to be scanned in the automatic regression mode and in results aggregation post processing.
-
-   This file defines the TC's to be ignored in the automatic regression mode and in results aggregation post processing. 
-
 2. Regression configurations dedicated settings file
 
    ```
    dev/sim/scripts_config/config_settings_regression.tcl
    ```
+
+​	This file defines the folders to be scanned in the automatic regression mode and in results aggregation post processing.
+
+​	This file defines the TC's to be ignored in the automatic regression mode and in results aggregation post processing. 
 
 The regression concept means that all test-cases are executed sequentially and at the end an aggregated pass/fail status will be reported. In addition aggregated test-coverage report is produced as well. 
 
@@ -138,7 +146,7 @@ Every regression call performs the following:
 6. Pass/Fail aggregation result
 7. Code Coverage aggregation result - scans all _result_rtl_ folders and merges all coverages and reports the aggregate result
 
-### 5.1.5 Simulator Vendor Specific Configurations
+### 5.1.5 HDL Simulator Vendor Specific Configurations
 
 Simulator vendor specific configurations are captured in the dedicated files, one per vendor, located in _dev/sim/scripts_config/_:
 
@@ -147,6 +155,176 @@ config_settings_activehdl.tcl   // ActiveHDL simulator configurations
 config_settings_vsim.tcl.       // Mentor Questa/ModelSim configurations
 config_settings_xcelium.tcl     // Cadence Xcelium configurations
 config_settings_xsim.tcl        // Xilinx Vivado XSim configurations
+```
+
+All vendor specific calls are pre-configured in the files above. The proper vendor file is selected based on the vendor configurations in command line options file here:
+
+```
+dev/sim/scripts_config/config_cmd_line_options_default.tcl
+```
+
+All vendor files follow a similar structure having identical compile/simulate calls. The HLS config file, not shown above is very different compared to the rest of the HDL compile/simulate flows.
+
+## 5.2 HLS Flow and Configuration
+
+### 5.2.1 HLS Flow Paths Configuration
+
+There are several paths that may be configured before the environment can be used. This is not required when using the provided examples. Otherwise when new folders are created or existing files or folders are moved or renamed then some sttings  changes to the settings will be required.
+
+There are three places where the file/folder paths are configured:
+
+```
+dev/sim/scripts_config/...
+dev/sim/testcases_env...
+dev/builds/axiburst_write/...
+```
+
+1. Paths in _dev/sim/scripts_config/..._ - SIMU central configuration place 
+2. Paths in _dev/sim/testcases_env..._ - test-case specific configurations. Here the simulation flow is configured to HLS.
+3. Paths in _dev/builds/axiburst_write/..._ - HLS project specific configurations
+
+The configuration options are variables inside the TCL files located at these locations.
+
+### 5.2.2 HLS Command Line Options Default
+
+The default command line options script located in:
+
+```
+dev/sim/scripts_config/config_cmd_line_options_default.tcl
+```
+
+This file contains the default options during CLI calls. During CLI call it is possible to override some configs defined in this file.
+
+Here you can define/change many options related to the HLS flow, like:
+
+1. TODO add
+
+NOTE: The Simulation flow can't be changed here to HLS. Not all configuration combinations are possible
+
+### 5.2.3 HLS TB/TC Execution Flow and Configurations
+
+It should be noted that there can be many test-benches and every test-bench can be called by many test-cases.
+
+The test-case (TC) is executed from the run folder:
+
+```
+cd dev/sim/run
+```
+
+All test-bench(TB) & test-cases(TC) HDL and their TCL scripts are located in folders like:
+
+```
+dev/sim/testcases_envFidus_sv_simMquestaXvivadoCxcelium
+dev/sim/testcases_envXilinx_hls_simXvitisXvivado
+```
+
+The folder name implies that the test-bench & test-cases are/using:
+
+1. using Fidus IP's/DBL's (envFidus), AMD/Xilinx environment IP's (envXilinx), Altera/Intel IP's (envIntel), OSVVM environment IP's (envOsvvm)
+
+2. written in SystemVerilog (\_sv\_), Verilog (\_v\_), VHDL (\_vhdl\_), HLS (\_hls\_)
+3. simulators used are Mentor Questa (Mquesta), Xilinx Vivado XSim (Xvivado), Xilinx Vitis (Xvitis), Cadence Xcelium (Cxcelium)
+
+In the test-cases(TC) folder it is possible to have another level of hierarchy to group similar test-cases by functionality, for example:
+
+```
+dev/sim/testcases_envXilinx_hls_simXvitisXvivado/tc_xilinx_axiburst_write
+dev/sim/testcases_envXilinx_hls_simXvitisXvivado/tc_xilinx_axiburst_read
+```
+
+In the example above we have one set of several test-cases and test-benches in _tc_xilinx_axiburst_write_ folder and another set of test-cases and test-benches in _tc_xilinx_axiburst_read_. 
+
+This hierarchy structure allows to have many module level simulations and many top (also called chip level or device level) simulations with many test-cases each which is often needed to cover different functionality configurations.
+
+#### 5.2.3.1 HLS Flow Details
+
+The HLS Vitis project is created from TCL sources in every run. If the Vitis project deleting option is disabled before the new run, the designer has to pay attention not to have conflicting residual configurations in the Vitis design from the previous run because the project creation scripts will overwrite some settings, but not all. For that reason the default is to delete the previous Vitis project before the new run and recreate the project from scratch from the TCL script.
+
+After the run is completed, the project can be open in the Vitis_HLS GUI and the work can continue in the GUI. After that all changes have to be exported to the TCL and the CFG scripts. These two files contain all information needed to re-create the HLS project in Vitis-HLS.
+
+There are two types but 3 scripts in total, located in the project scripts folder located in the _/dev/builds/scripts/axiburst_write_ folder
+
+```
+proj_create.cfg   <- contains all Vitis-HLS configuration options
+proj_create.tcl   <- contains all commands and files needed to create RTL_HLS project (with the default dummy/empty TB HLS file )
+proj_paths.tcl    <- all paths needing to be configured
+```
+
+When the HLS flow is executed, initially only the HLS synthesisable (RTL-HLS) code and dummy TB HLS files are used to create a Vitis_HLS project. Later the real TB&TC files are added to the Vitis_HLS project, replacing the dummy TB files. All C++ RTL-HLS files are located in _dev/sim/sources_hls_.
+
+The Vitis-HLS project is created in _dev/builds/vitis/axu4_sqrt_ folder and can be open in the Vitis GUI. When the work is done it is important to export the project .CFG file and propagate the changes manually to the _project_create.cfg_ file to preserve that work. The same is true for the project creation TCL file _proj_create.tcl_. 
+
+Every TB&TC file (for example the C++ file _tc_01_xilinx_axiburst_write.cpp_ - here the TB is the TC, hence only one file) has a dedicated _tbtc_add.tcl_ file that adds all TB, TC, BFMs files to the already pre-existing RTL-HLS only Vitis project. If a different set of TB, TC, BFM, RTL HDL has to be compiled for a different module then a new folder is recommended to be created for that with a different _tbtc_add.tcl_ file and TB&TC files. It is also recommended to put a copy of the header .h/.hpp files of the HLS top level and the simulation management library. The folder looks like this:
+
+```
+/dev/sim/testcases_envXilinx_hls_simXvitisXvivado/tc_xilinx_axiburst_write/tbtc_add.tcl                     <- TB&TC add script
+/dev/sim/testcases_envXilinx_hls_simXvitisXvivado/tc_xilinx_axiburst_write/tc_01_xilinx_axiburst_write.cpp  <- TB&TC
+/dev/sim/testcases_envXilinx_hls_simXvitisXvivado/tc_xilinx_axiburst_write/axi4_sqrt.hpp                    <- HLS top
+/dev/sim/testcases_envXilinx_hls_simXvitisXvivado/tc_xilinx_axiburst_write/sim_management_pkg.h             <- sim lib
+```
+
+The TB&TC contains the instance of the Device Under Test (DUT) also called Unit Under Test (UUT) which is the instance of the HLS top module to be simulated. In addition to the DUT in the TB&TC we instantiate the BFMs as well and connect them to the DUT.
+
+Located in the same folder _/dev/sim/testcases_envXilinx_hls_simXvitisXvivado/tc_xilinx_axiburst_write/_, every TB&TC file has 5 dedicated TCL scripts with identical name as the test-case file but with 5 different suffixes to indicated the HLS flow stage:
+
+```
+tc_01_xilinx_axiburst_write_1cppsim.tcl     <- C++ simulation stage
+tc_01_xilinx_axiburst_write_2csynth.tcl     <- HLS synthesis stage
+tc_01_xilinx_axiburst_write_3cosim.tcl       <- HLS Co-simulation stage first runs the C++ HLS simulation and then the synthesized RTL simulation using Xilinx or other HDL simulator
+tc_01_xilinx_axiburst_write_4export.tcl     <- HLS exporting stage where the Vivado IP is exported containing the synthesized HDL
+tc_01_xilinx_axiburst_write_5implement.tcl  <- HLS implementation stage where the IP is running OOC P&R in Vivado and timing closure is reported
+```
+
+After executing simulation a _results_rtl_ is created to collect the output products from simulation run used for results aggregation processing in regression runs. Some simulation output products might reside in the run folder as well:
+
+```
+/dev/sim/testcases_envXilinx_hls_simXvitisXvivado/tc_xilinx_axiburst_write/results_rtl
+/dev/sim/run
+```
+
+### 5.2.4 HLS Regression Execution Flow and Configurations
+
+The regression option can be controlled in two places:
+
+1. Command line options file
+
+   ```
+   dev/sim/scripts_config/config_cmd_line_options_default.tcl
+   ```
+
+2. Regression configurations dedicated settings file
+
+   ```
+   dev/sim/scripts_config/config_settings_regression.tcl
+   ```
+
+​	This file defines the folders to be scanned in the automatic regression mode and in results aggregation post processing.
+
+​	This file defines the TC's to be ignored in the automatic regression mode and in results aggregation post processing. 
+
+The regression concept means that all test-cases are executed sequentially and at the end an aggregated pass/fail status will be reported. In addition aggregated test-coverage report is produced as well. 
+
+Only one type regression is available in SIMU to run HLS simulations - manual regression. The Automatic regression is not suited/supported to run HLS.
+
+The manual regression option gives full control over the execution sequence. 
+
+Every regression call performs the following:
+
+1. Executing all TCs in automatic fashion or in manual mode - not yet
+2. Automatic TC regression scan and run - not yet
+3. TC execution sequence control
+4. Using a different random seed forcing randomization during every new run - not yet
+5. Re-run regression with a single forced seed - not yet
+6. Pass/Fail aggregation result - not yet
+7. Code Coverage aggregation result - scans all _result_rtl_ folders and merges all coverages and reports the aggregate result - not yet
+
+**NOTE: The regression option for HLS is not fully functional/completed yet.**
+
+### 5.2.5 HLS Simulator Vendor Specific Configurations
+
+Simulator vendor specific configurations are captured in the dedicated files, one per vendor, located in _dev/sim/scripts_config/_:
+
+```
 config_settings_xhls.tcl        // Xilinx Vitis configurations
 ```
 
@@ -156,31 +334,7 @@ All vendor specific calls are pre-configured in the files above. The proper vend
 dev/sim/scripts_config/config_cmd_line_options_default.tcl
 ```
 
-All vendor files follow a similar structure having identical compile/simulate calls. The only more significant exception is the HLS config file since the HLS simulation flow is significantly different compared to the rest of the HDL compile/simulate flows.
-
-## 5.2 SIMU HLS Flow and Configuration
-
-### HLS Flow Paths Configuration
-
-There are several paths that have to be configured before the environment can be used:
-
-1. Paths in the general sim/scripts folder
-2. Paths in the sim/test-cases folder
-3. Paths in build/scripts folder
-
-### HLS Flow Options Configuration
-
-The HLS Vitis project is created from TCL sources in every run. The project that is run for simulation, synthesis or export is a Vitis project that can be open in Vitis GUI after the run. The Vitis project is deleted before every new run unless that is disabled in the configuration file. 
-
-If the Vitis project deleting option is disabled before the new run, the designer has to pay attention not to have conflicting residual configurations in the Vitis design from the previous run because the project creation scripts will overwrite some settings.
-
-### HLS Test-cases, test-benches, HLS Configuration
-
-
-
-### HLS Regression Configuration
-
-
+All vendor files follow a similar structure having identical compile/simulate calls (only one for now but Mentor also has HLS compiles that can be added here). The HLS config file is quite different from the HDL config file since the HLS simulation flow is significantly different compared to the rest of the HDL compile/simulate flows.
 
 ## 5.3 Run Single Test-Case (TC) simulation
 
@@ -194,16 +348,16 @@ It has to be noted that
 
 There are several ways to run simulation of a single test-case. They achieve the same result, running a test-case simulation, but are invoked in different ways using:
 
-a) Linux TCL interpreter using tclsh terminal  
+a) Linux TCL interpreter using tclsh terminal  - suitable for all HDL vendors and for all HLS vendors
 
-b) Simulator vendor TCL CLI in bash terminal 
+b) Simulator vendor TCL CLI in bash terminal - suitable only some HDL vendors
 
-c) Simulator vendor TCL terminal in GUI 
+c) Simulator vendor TCL terminal in GUI - suitable only some HDL vendors
 
  * _The three use-cases above can be used with or without the SIMU shell_ 
  * _The three use-cases above can be used with the run_testcase function form the SIMU shell or by simply "sourcing" the test-case script_
 
-### 5.3.1 Test-case simulation - using Linux TCL interpreter
+### 5.3.1 Test-case simulation (for all HDL and all HLS vendors) - using Linux TCL interpreter
 
 **(with/without SIMU shell, with/without SIMU _run_testcase_ simulation call, with/without SVTI in CLI mode, simulator vendor tool independent)**
 
@@ -237,8 +391,6 @@ $ tclsh
 Alternatively, as seen above, it is also possible not to use the SIMU shell. In this case the user interface lacks history and it is not convenient for use and for that reason it is shown here for completeness, but it is not recommended to be used for not being user friendly.
 
 TODO: add examples with parameters passing
-
-
 
 ### 5.3.2 Test-case simulation - using simulator vendor TCL interpreter (SVTCL)
 
@@ -324,8 +476,6 @@ Specific settings have to be enabled in this mode TODO:
 
 TODO: add call examples
 
-
-
 #### Xcelium TCL interpreter
 
 Xcelium TCL interpreter has the following specifics:
@@ -362,15 +512,15 @@ Specific settings have to be enabled in this mode TODO:
 
 TODO: add call examples, they should be similar to the Modelsim/Quartus calls.
 
-
-
 #### VitisHLS TCL interpreter
 
 VitisHLS TCL interpreter has the following specifics:
 
 a) There is no SVTCL in CLI or GUI variants in VitisHLS. As a result only the Linux _tclsh_ TCL interpreter should be used.
 
-~TODO:investigate_using_VitisHLS_option_to_pass_a_TCL_file_for_execution.~
+_TODO:investigate_using_VitisHLS_option_to_pass_a_TCL_file_for_execution._
+
+
 
 ## 5.4 Run Regression Simulation
 
@@ -387,7 +537,7 @@ c) simulator vendor TCL terminal in GUI - can be used to run simulations on Wind
  * _The three use-cases above can be used with or without the SIMU shell_ 
  * _The three use-cases above can be used with the run_testcase function form the SIMU shell or by simply sourcing the test-case script_
 
-### 5.4.1 Manual Regression Simulation 
+### 5.4.1 Manual Regression Simulation (for all HDL vendors and all HLS vendors)
 
 The manual regression uses a list of test-cases that is manually maintained. An example of that script can be found in _/dev/sim/regression_lists/REGRESSION_TC_LIST_MANUAL.tcl_
 
@@ -395,7 +545,7 @@ A manual regression can't run in multiple parallel threads.
 
 The regression run progress can't be easily monitored.
 
-#### 5.4.1.1 Manual Regression - using Linux TCL interpreter
+#### 5.4.1.1 Manual Regression - using Linux TCL interpreter (for all HDL vendors and all HLS vendors)
 
 **(with/without SIMU shell, with TCL _source_ call, simulator vendor tool independent)**
 
@@ -466,8 +616,6 @@ Specific settings have to be enabled in this mode TODO:
 
 TODO: add call examples
 
-
-
 ##### Xcelium TCL interpreter
 
 Xcelium TCL interpreter has the following specifics:
@@ -506,15 +654,15 @@ Specific settings have to be enabled in this mode TODO:
 
 TODO: add call examples, they should be similar to the Modelsim/Quartus calls.
 
-
-
 ##### VitisHLS TCL interpreter
 
 VitisHLS TCL interpreter has the following specifics:
 
 a) There is no SVTCL in CLI or GUI variants. As a result only the Linux _tclsh_ TCL interpreter should be used.
 
-~TODO:investigate_using_VitisHLS_option_to_pass_a_TCL_file_for_execution.~
+_TODO:investigate_using_VitisHLS_option_to_pass_a_TCL_file_for_execution._
+
+
 
 ### 5.4.2 Automatic Regression 
 
@@ -603,8 +751,6 @@ Specific settings have to be enabled in this mode TODO:
 
 TODO: add call examples
 
-
-
 ##### Xcelium TCL interpreter
 
 Xcelium TCL interpreter has the following specifics:
@@ -643,13 +789,13 @@ Specific settings have to be enabled in this mode TODO:
 
 TODO: add call examples, they should be similar to the Modelsim/Quartus calls.
 
-
-
 ##### VitisHLS TCL interpreter
 
 VitisHLS TCL interpreter has the following specifics:
 
 a) There is no SVTCL in CLI or GUI variants. As a result only the Linux _tclsh_ TCL interpreter should be used.
 
-~TODO:investigate_using_VitisHLS_option_to_pass_a_TCL_file_for_execution.~
+_TODO:investigate_using_VitisHLS_option_to_pass_a_TCL_file_for_execution._
+
+
 
