@@ -252,7 +252,16 @@ proj_paths.tcl    <- all paths needing to be configured
 
 When the HLS flow is executed, initially only the HLS synthesisable (RTL-HLS) code and dummy TB HLS files are used to create a Vitis_HLS project. Later the real TB&TC files are added to the Vitis_HLS project, replacing the dummy TB files. All C++ RTL-HLS files are located in _dev/sim/sources_hls_.
 
-The Vitis-HLS project is created in _dev/builds/vitis/axu4_sqrt_ folder and can be open in the Vitis GUI. When the work is done it is important to export the project .CFG file and propagate the changes manually to the _project_create.cfg_ file to preserve that work. The same is true for the project creation TCL file _proj_create.tcl_. 
+The Vitis-HLS project is created in _dev/builds/vitis/axi4_sqrt_ folder and can be open in the Vitis GUI. When the work is done it is important to export the project .CFG file and propagate the changes manually to the _project_create.cfg_ file to preserve that work. The same is true for the project creation TCL file _proj_create.tcl_. 
+
+The already created HLS project can be open like this, note using _-classsic_ is going to be deprecated:
+
+```
+cd dev/builds/vitis/
+vitis_hls -classic -p ./axi4_sqrt
+```
+
+
 
 Every TB&TC file (for example the C++ file _tc_01_xilinx_axiburst_write.cpp_ - here the TB is the TC, hence only one file) has a dedicated _tbtc_add.tcl_ file that adds all TB, TC, BFMs files to the already pre-existing RTL-HLS only Vitis project. If a different set of TB, TC, BFM, RTL HDL has to be compiled for a different module then a new folder is recommended to be created for that with a different _tbtc_add.tcl_ file and TB&TC files. It is also recommended to put a copy of the header .h/.hpp files of the HLS top level and the simulation management library. The folder looks like this:
 
@@ -516,9 +525,19 @@ TODO: add call examples, they should be similar to the Modelsim/Quartus calls.
 
 VitisHLS TCL interpreter has the following specifics:
 
-a) There is no SVTCL in CLI or GUI variants in VitisHLS. As a result only the Linux _tclsh_ TCL interpreter should be used.
+a) Older Vivado HLS did not have SVTCL in CLI or GUI variants in VitisHLS. As a result only the Linux _tclsh_ TCL interpreter should be used.
 
-_TODO:investigate_using_VitisHLS_option_to_pass_a_TCL_file_for_execution._
+b) Vitis 2024 has SVTCL which can be invoked:
+
+```
+#vitis_hls -i
+vitis_hls> exit
+#
+```
+
+
+
+
 
 
 
