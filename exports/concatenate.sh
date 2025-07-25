@@ -8,3 +8,4 @@ cat ./documentation/05_User_Guide.md >> ./exports/simu-documentation.md
 cat ./documentation/06_Architecture.md >> ./exports/simu-documentation.md
 cat ./documentation/07_Developers_Guide.md >> ./exports/simu-documentation.md
 cat ./documentation/08_Appendix.md >> ./exports/simu-documentation.md
+ 
