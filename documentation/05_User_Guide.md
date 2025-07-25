@@ -1,6 +1,6 @@
 # 5. SIMU User Guide
 
-Unless noted psecifically, in the examples below we will use SystemVerilog test-cases and Mentor's Questa&reg; HDL simulator calls. Other HDL languages and simulators will have very similar, almost identical calls and behaviour.
+Unless noted specifically, in the examples below we will use SystemVerilog test-cases and Mentor's Questa&reg; HDL simulator calls. Other HDL languages and simulators will have very similar, almost identical calls and behaviour.
 
 ## 5.1 HDL Flow and Configuration
 
