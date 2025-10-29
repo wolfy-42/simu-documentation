@@ -1,4 +1,4 @@
-# 5. SIMU User Guide
+# 5. User Guide
 
 Unless noted specifically, in the examples below we will use SystemVerilog test-cases and Mentor's Questa&reg; HDL simulator calls. Other HDL languages and simulators will have very similar, almost identical calls and behaviour.
 
@@ -50,7 +50,11 @@ NOTE: Not all configuration combinations are possible
 
 ### 5.1.3 HDL TB/TC Execution Flow and Configurations
 
-It should be noted that there can be many test-benches and every test-bench can be called by many test-cases.
+![FPGA Development Diagram](./images/simulation_environment_hierarchy.drawio.png)
+
+_Figure 5.1.3-1 SV Test-Bench Hierarchy with TB at the top_ (used by SIMU SSVE examples)
+
+It should be noted that there can be many test-benches and every test-bench can be used by many test-cases.
 
 The test-case (TC) is executed from the run folder:
 
@@ -366,6 +370,14 @@ c) Simulator vendor TCL terminal in GUI - suitable only some HDL vendors
  * _The three use-cases above can be used with or without the SIMU shell_ 
  * _The three use-cases above can be used with the run_testcase function form the SIMU shell or by simply "sourcing" the test-case script_
 
+
+
+The screen-capture below shows a typical test-case run log. 
+
+![FPGA Development Diagram](./images/simulation_environment_logs_tc.drawio.png)
+
+
+
 ### 5.3.1 Test-case simulation (for all HDL and all HLS vendors) - using Linux TCL interpreter
 
 **(with/without SIMU shell, with/without SIMU _run_testcase_ simulation call, with/without SVTI in CLI mode, simulator vendor tool independent)**
@@ -555,6 +567,30 @@ c) simulator vendor TCL terminal in GUI - can be used to run simulations on Wind
 
  * _The three use-cases above can be used with or without the SIMU shell_ 
  * _The three use-cases above can be used with the run_testcase function form the SIMU shell or by simply sourcing the test-case script_
+
+
+
+There three regression logs blow show the type of regressions statistics provided at the end of the run.
+
+![FPGA Development Diagram](./images/simulation_environment_logs_regress1.drawio.png)
+
+
+
+![FPGA Development Diagram](./images/simulation_environment_logs_regress2.drawio.png)
+
+
+
+![FPGA Development Diagram](./images/simulation_environment_logs_regress3.drawio.png)
+
+
+
+Below you can see an example running three threads in parallel from three different terminals. This speeds up simulation runs three times at the cost of using three simulator licenses.
+
+![FPGA Development Diagram](./images/simulation_environment_regress_threads.drawio.png)
+
+TODO integrate the clip
+
+
 
 ### 5.4.1 Manual Regression Simulation (for all HDL vendors and all HLS vendors)
 

@@ -1,5 +1,15 @@
 # Architecture
 
+![FPGA Development Diagram](./images/simulation_environment_hierarchy.drawio.png)
+
+_Figure 5.1.3-1 SV Test-Bench Hierarchy with TB at the top_ (used by SIMU SSVE examples)
+
+
+
+![FPGA Development Diagram](./images/simulation_environment_hierarchy_details.drawio.png)
+
+
+
 ## Scripts folder structure
 
 The TCL scripts are located in the scrpts_config folder as described below:
